@@ -17,11 +17,11 @@ interface IUserModel extends Document {
   address: string;
   profilePicture: string;
 
-  shop?: string;
+  store?: Schema.Types.ObjectId;
   generateAuthToken(): void;
 }
 
-const userSchema = new Schema(
+const userSchema: Schema<IUserModel> = new Schema(
   {
     firstName: {
       type: String,
@@ -57,9 +57,9 @@ const userSchema = new Schema(
       required: true,
     },
 
-    shop: {
+    store: {
       type: Schema.Types.ObjectId,
-      ref: "Shop",
+      ref: "Store",
     },
   },
   { timestamps: true }
@@ -69,7 +69,7 @@ userSchema.methods.generateAuthToken = function (this): string {
   const payload = {
     _id: this._id,
     fullName: this.firstName + " " + this.lastName,
-    shop: this.shop,
+    store: this.store,
   };
   return jwt.sign(payload, "jwtSecretKey");
 };
