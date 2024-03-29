@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { RegisterUser } from "../interface/userInterface";
+import { LoginUser, RegisterUser } from "../interface/userInterface";
 
 export const registerUserValidator = (
   data: RegisterUser
@@ -32,15 +32,34 @@ export const registerUserValidator = (
       }),
 
     password: Joi.string().min(7).max(50).required().messages({
-      "string.base": "Email is a type of string",
-      "any.required": "Email is required field",
-      "string.empty": "Email is a required field",
+      "string.base": "Password is a type of string",
+      "any.required": "Password is required field",
+      "string.empty": "Password is a required field",
+      "string.min": "Password should have atleast 7 characters",
+      "string.max": "Password should only contain 50 characters",
     }),
     confirmPassword: Joi.string().min(7).max(50).required().messages({
+      "string.base": "Confirm Password is a type of string",
+      "any.required": "Confirm Password is required field",
+      "string.empty": "Confirm Password is a required field",
+    }),
+  });
+  return schema.validate(data);
+};
+
+export const loginUserValidator = (data: LoginUser): Joi.ValidationResult => {
+  const schema = Joi.object({
+    email: Joi.string().required().messages({
       "string.base": "Email is a type of string",
       "any.required": "Email is required field",
       "string.empty": "Email is a required field",
     }),
+    password: Joi.string().required().messages({
+      "string.base": "Confirm Password is a type of string",
+      "any.required": "Confirm Password is required field",
+      "string.empty": "Confirm Password is a required field",
+    }),
   });
+
   return schema.validate(data);
 };

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
+import jwt from "jsonwebtoken";
 const DB_URL = "mongodb://localhost:27017/trendease_v2";
 
 mongoose
@@ -64,6 +64,15 @@ const userSchema = new Schema(
   },
   { timestamps: true }
 );
+
+userSchema.methods.generateAuthToken = function (this): string {
+  const payload = {
+    _id: this._id,
+    fullName: this.firstName + " " + this.lastName,
+    shop: this.shop,
+  };
+  return jwt.sign(payload, "jwtSecretKey");
+};
 
 const User = mongoose.model<IUserModel>("User", userSchema);
 
