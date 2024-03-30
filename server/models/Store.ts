@@ -37,12 +37,6 @@ const storeSchema: Schema<IStoreModel> = new Schema(
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    products: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Product",
-      },
-    ],
   },
   { timestamps: true }
 );

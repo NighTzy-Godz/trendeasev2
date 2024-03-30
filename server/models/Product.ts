@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-import ProductCategory from "../interface/productInterface";
+import { ProductCategory } from "../interface/productInterface";
 const DB_URL = "mongodb://localhost:27017/trendease_v2";
 
 mongoose

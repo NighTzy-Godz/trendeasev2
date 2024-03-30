@@ -1,4 +1,4 @@
-enum ProductCategory {
+export enum ProductCategory {
   ELECTRONICS = "Electronics",
   CLOTHING = "Clothing",
   HOME_AND_KITCHEN = "Home & Kitchen",
@@ -7,4 +7,11 @@ enum ProductCategory {
   TOYS_AND_GAMES = "Toys & Games",
   OTHER = "Other",
 }
-export default ProductCategory;
+
+export interface CreateProduct {
+  productName: string;
+  description: string;
+  price: string;
+  quantity: string;
+  category: ProductCategory;
+}
