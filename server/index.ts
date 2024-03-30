@@ -14,4 +14,5 @@ app.use(static_(path.join(__dirname, "src", "assets")));
 app.use("/api/user", userRoutes);
 app.use("/api/store", storeRoutes);
 
-app.listen(PORT, () => console.log("Connected on PORT ", PORT));
+const server = app.listen(PORT, () => console.log("Connected on PORT ", PORT));
+export default server;
