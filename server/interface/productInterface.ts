@@ -1,11 +1,11 @@
 export enum ProductCategory {
-  ELECTRONICS = "Electronics",
-  CLOTHING = "Clothing",
-  HOME_AND_KITCHEN = "Home & Kitchen",
-  SPORTS_AND_OUTDOORS = "Sports & Outdoors",
-  BEAUTY_AND_HEALTH = "Beauty & Health",
-  TOYS_AND_GAMES = "Toys & Games",
-  OTHER = "Other",
+  Electronics = "electronics",
+  Fashion = "fashion",
+  Appliances = "appliances",
+  Apparel = "apparel",
+  Instruments = "instruments",
+  Sports = "sports",
+  Health_and_Beauty = "health and beauty",
 }
 
 export interface CreateProduct {

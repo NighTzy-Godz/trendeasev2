@@ -15,6 +15,7 @@ interface IProductModel extends Document {
   category: ProductCategory;
   images: string[];
   store: Schema.Types.ObjectId;
+  relatedProducts: Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
 }
