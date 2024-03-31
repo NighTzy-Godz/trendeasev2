@@ -1,3 +1,5 @@
+import { useGetAllProductsQuery } from "./store/apis/productsApi";
+
 function App() {
   return (
     <div className="">
