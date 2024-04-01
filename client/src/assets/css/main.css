@@ -2,19 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: Kanit;
-  src: url("../fonts/Kanit-Regular.ttf");
-}
-
 @layer base {
-  html {
-    font-family: Kanit, system-ui, -apple-system, sans-serif;
+  @font-face {
+    font-family: Kanit;
+    src: url("../fonts/Kanit-Regular.ttf");
+  }
+  @font-face {
+    font-family: Oswald;
+    src: url("../fonts/Oswald-Bold.ttf");
   }
 }
 
 * {
   @apply transition-colors duration-300;
+}
+
+.active {
+  @apply text-mainColor;
 }
 
 @layer base {
@@ -38,10 +42,10 @@
 
   .retro_theme {
     --bg-color: 7, 115, 122;
-    --bg-color-hover: 18, 106, 112
-    --main-color: 136, 219, 223
+    --bg-color-hover: 18, 106, 112;
+    --main-color: 136, 219, 223;
     --main-color-hover: 94, 202, 207;
-    --text-color: 255, 255, 255
+    --text-color: 255, 255, 255;
     --error-color: 224, 85, 51;
   }
 }
