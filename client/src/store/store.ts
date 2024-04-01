@@ -10,4 +10,6 @@ export const store = configureStore({
     getDefaultMiddleware().concat(productsApi.middleware),
 });
 
+export type RootState = ReturnType<typeof reducer>;
+
 setupListeners(store.dispatch);

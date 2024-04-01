@@ -12,3 +12,36 @@
     font-family: Kanit, system-ui, -apple-system, sans-serif;
   }
 }
+
+* {
+  @apply transition-colors duration-300;
+}
+
+@layer base {
+  :root {
+    --bg-color: 255, 255, 255;
+    --bg-color-hover: 241, 234, 234;
+    --main-color: 40, 230, 72;
+    --main-color-hover: 44, 189, 92;
+    --text-color: 31, 26, 26;
+    --error-color: 224, 85, 51;
+  }
+
+  :root[data-theme="dark"] {
+    --bg-color: 49, 49, 49;
+    --bg-color-hover: 56, 52, 52;
+    --main-color: 246, 110, 13;
+    --main-color-hover: 194, 91, 18;
+    --text-color: 245, 230, 200;
+    --error-color: 224, 85, 51;
+  }
+
+  .retro_theme {
+    --bg-color: 7, 115, 122;
+    --bg-color-hover: 18, 106, 112
+    --main-color: 136, 219, 223
+    --main-color-hover: 94, 202, 207;
+    --text-color: 255, 255, 255
+    --error-color: 224, 85, 51;
+  }
+}
