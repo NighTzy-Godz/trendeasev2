@@ -5,6 +5,8 @@ import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
+import "animate.css";
+
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
   const dispatch = useDispatch();

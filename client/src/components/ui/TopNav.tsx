@@ -6,7 +6,10 @@ import { FaUser } from "react-icons/fa";
 import { FaHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { useDispatch } from "react-redux";
+import { setShowLoginModal } from "../../store/slices/ui";
 function TopNav() {
+  const dispatch = useDispatch();
   const navClassName = `font-kanit text-lg text-textColor hover:text-mainColor`;
 
   const [navToggle, setNavToggle] = useState(false);
@@ -87,15 +90,18 @@ function TopNav() {
                   <IoSearch className="h-5 w-5 text-textColor" />
                 </button>
               </div>
-              <ul className="flex gap-1 items-center">
+              <ul className="flex gap-5 items-center">
                 <li>
-                  <FaUser className="w-5 h-5 text-textColor cursor-pointer font-semibold" />
+                  <FaUser
+                    className="w-6 h-6 text-textColor cursor-pointer font-semibold"
+                    onClick={() => dispatch(setShowLoginModal(true))}
+                  />
                 </li>
                 <li>
-                  <FaHeart className="w-5 h-5 text-textColor cursor-pointer font-semibold" />
+                  <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
                 </li>
                 <li>
-                  <FaCartShopping className="w-5 h-5 text-textColor cursor-pointer font-semibold" />
+                  <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
                 </li>
               </ul>
             </div>
