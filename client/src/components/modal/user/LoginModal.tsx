@@ -3,6 +3,7 @@ import Modal from "../../common/Modal";
 import { useForm } from "react-hook-form";
 import { LoginData } from "../../../interfaces/userInterfaces";
 import Input from "../../common/Input";
+import Button from "../../common/Button";
 
 interface LoginModalProps {
   isShow: boolean;
@@ -26,6 +27,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
         <div className="mb-5">
           <Input placeholder="Password ..." type="password" />
         </div>
+        <Button variant="success">Submit</Button>
       </Modal>
     );
   }
