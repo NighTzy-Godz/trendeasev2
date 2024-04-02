@@ -83,7 +83,7 @@ function TopNav() {
               <div className="relative mt-1">
                 <input
                   type="text"
-                  className="px-3 pb-0 pt-0 mb-1 text-textColor text-sm  h-8 border rounded-full disabled:cursor-not-allowed disabled:opacity-50 border-gray-300 bg-transparent focus:border-mainColor focus:ring-mainColor outline-none
+                  className="px-3 pb-0 pt-0 mb-1 text-textColor text-sm  h-8 border rounded-full disabled:cursor-not-allowed disabled:opacity-50 border-textColor bg-transparent focus:border-mainColor focus:ring-mainColor outline-none
                 "
                 />
                 <button className="absolute right-3 top-[6px] cursor-pointer">
