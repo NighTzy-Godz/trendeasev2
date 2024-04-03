@@ -1,9 +1,14 @@
-import React, { ButtonHTMLAttributes, forwardRef } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  forwardRef,
+  useEffect,
+  useState,
+} from "react";
 import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "../../utils/utils";
 
 const btnVariants = cva(
-  "w-full inline-flex items-center justify-center rounded-md rounded-md font-kanit focus:outline-none focus:ring-2 ",
+  "relative w-full inline-flex items-center justify-center rounded-md rounded-md font-kanit focus:outline-none focus:ring-2 ",
   {
     variants: {
       variant: {
@@ -26,16 +31,49 @@ const btnVariants = cva(
 
 interface ButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof btnVariants> {}
+    VariantProps<typeof btnVariants> {
+  isLoading?: boolean;
+}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, size, variant, ...props }: ButtonProps, ref) => {
+  (
+    { className, isLoading, size, variant, children, ...props }: ButtonProps,
+    ref
+  ) => {
+    const [count, setCount] = useState(0);
+    const [msg, setMsg] = useState("");
+    useEffect(() => {
+      let timerId: number;
+      if (isLoading) {
+        if (count > 5) {
+          setMsg(
+            "Please be patient, it may take some time to complete this action "
+          );
+        } else {
+          setMsg("Loading ...");
+        }
+
+        timerId = setTimeout(() => {
+          setCount(count + 1);
+        }, 1000);
+      }
+
+      return () => {
+        clearTimeout(timerId);
+        if (!isLoading) setCount(0);
+      };
+    }, [count, isLoading]);
+
     return (
       <button
-        className={cn(btnVariants({ variant, size, className }))}
+        className={`${className}${cn(
+          btnVariants({ variant, size, className })
+        )}`}
         ref={ref}
         {...props}
-      />
+      >
+        {isLoading ? msg : children}
+      </button>
     );
   }
 );

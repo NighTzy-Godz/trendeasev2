@@ -15,7 +15,7 @@ interface LoginModalProps {
 
 function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   const [loginUser, result] = useLoginUserMutation();
-  const { error } = result;
+  const { error, isLoading } = result;
 
   const {
     register,
@@ -66,7 +66,9 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
 
             {errors.password && <InputError msg={errors.password.message} />}
           </div>
-          <Button variant="default">Submit</Button>
+          <Button variant="default" isLoading={isLoading}>
+            Submit
+          </Button>
         </form>
       </Modal>
     );

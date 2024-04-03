@@ -19,7 +19,7 @@ function App() {
   return (
     <BrowserRouter>
       {" "}
-      <ToastContainer transition={Zoom} />
+      <ToastContainer transition={Zoom} autoClose={2500} />
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
