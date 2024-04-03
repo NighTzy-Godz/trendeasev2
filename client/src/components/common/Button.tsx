@@ -3,11 +3,12 @@ import { VariantProps, cva } from "class-variance-authority";
 import { cn } from "../../utils/utils";
 
 const btnVariants = cva(
-  "w-full inline-flex items-center justify-center rounded-md rounded-md font-kanit focus:outline-none focus:ring-2",
+  "w-full inline-flex items-center justify-center rounded-md rounded-md font-kanit focus:outline-none focus:ring-2 ",
   {
     variants: {
       variant: {
-        default: "bg-mainColor text-textColor hover:bg-mainColorHover",
+        default:
+          "bg-mainColor text-textColor hover:bg-mainColorHover focus:ring-textColor",
         success: "bg-green-600 text-white",
         error: "bg-red-500 text-white",
       },

@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { RootState } from "./store/store";
 import "animate.css";
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, Zoom } from "react-toastify";
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ function App() {
 
   return (
     <BrowserRouter>
+      {" "}
+      <ToastContainer transition={Zoom} />
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
