@@ -24,11 +24,14 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   } = useForm<LoginData>();
 
   useEffect(() => {
-    if (error) {
-      if ("status" in error) {
+    if (error && "originalStatus" in error) {
+      if (error.originalStatus >= 500) {
+        toast.error("Unexpected Error Happened" as string, {
+          toastId: "Login Unexpected",
+        });
+      } else {
         toast.error(error.data as string, {
-          autoClose: 2500,
-          toastId: "Login ERror",
+          toastId: "Login Error",
         });
       }
     }
@@ -66,9 +69,20 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
 
             {errors.password && <InputError msg={errors.password.message} />}
           </div>
-          <Button variant="default" isLoading={isLoading}>
-            Submit
-          </Button>
+          <div className="mb-1">
+            {" "}
+            <Button variant="default" isLoading={isLoading}>
+              Submit
+            </Button>
+          </div>
+          <div className="">
+            <p className="font-kanit font-sm text-textColor">
+              Not a member yet?{" "}
+              <span className="font-semibold text-mainColor hover:underline cursor-pointer">
+                Register Here
+              </span>
+            </p>
+          </div>
         </form>
       </Modal>
     );

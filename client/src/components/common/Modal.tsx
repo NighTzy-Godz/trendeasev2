@@ -9,7 +9,7 @@ interface ModalProps {
 function Modal({ headerTitle, onModalClose, children }: ModalProps) {
   return (
     <div className="fixed  py-10 left-0 top-0 h-dvh w-dvw bg-black/60  z-50 ">
-      <div className="h-dvh grid place-items-center lg:w-1/3  mx-auto">
+      <div className="h-dvh grid place-items-center lg:w-1/4  mx-auto">
         <div className=" bg-bgColor w-full rounded-lg flex flex-col px-10 py-5  animate__animated animate__fadeInDown animate__faster">
           <div className="flex justify-between items-center mb-5">
             <h1 className="text-mainColor lg:text-3xl font-kanit">
