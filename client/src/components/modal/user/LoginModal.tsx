@@ -21,11 +21,12 @@ interface LoginModalProps {
 function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   const dispatch = useDispatch();
   const [loginUser, result] = useLoginUserMutation();
-  const { error, isLoading } = result;
+  const { error, isLoading, isSuccess } = result;
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginData>();
 
@@ -35,11 +36,13 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
         toast.error("Unexpected Error Happened" as string, {
           toastId: "Login Unexpected",
         });
-      } else {
-        toast.error(error.data as string, {
-          toastId: "Login Error",
-        });
       }
+    }
+
+    if (isSuccess) {
+      toast.success("Successfully Logged In!");
+
+      reset();
     }
   }, [result]);
 
