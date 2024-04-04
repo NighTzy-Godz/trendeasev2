@@ -3,7 +3,7 @@ import { IoMdClose } from "react-icons/io";
 interface ModalProps {
   onModalClose(): void;
   headerTitle: string;
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
 function Modal({ headerTitle, onModalClose, children }: ModalProps) {

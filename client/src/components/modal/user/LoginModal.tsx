@@ -7,6 +7,11 @@ import Button from "../../common/Button";
 import InputError from "../../common/InputError";
 import { useLoginUserMutation } from "../../../store/apis/userApi";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import {
+  setShowLoginModal,
+  setShowRegisterUserModal,
+} from "../../../store/slices/ui";
 
 interface LoginModalProps {
   isShow: boolean;
@@ -14,6 +19,7 @@ interface LoginModalProps {
 }
 
 function LoginModal({ isShow, onModalClose }: LoginModalProps) {
+  const dispatch = useDispatch();
   const [loginUser, result] = useLoginUserMutation();
   const { error, isLoading } = result;
 
@@ -37,13 +43,18 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
     }
   }, [result]);
 
+  const handleRegisterClick = () => {
+    dispatch(setShowLoginModal(false));
+    dispatch(setShowRegisterUserModal(true));
+  };
+
   const handleLoginSubmit = (data: LoginData) => {
     loginUser(data);
   };
 
   if (isShow) {
     return (
-      <Modal headerTitle="Login Form" onModalClose={onModalClose}>
+      <Modal headerTitle="User Login Form" onModalClose={onModalClose}>
         <form onSubmit={handleSubmit(handleLoginSubmit)}>
           {" "}
           <div className="mb-6">
@@ -72,13 +83,16 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
           <div className="mb-1">
             {" "}
             <Button variant="default" isLoading={isLoading}>
-              Submit
+              Login
             </Button>
           </div>
           <div className="">
             <p className="font-kanit font-sm text-textColor">
               Not a member yet?{" "}
-              <span className="font-semibold text-mainColor hover:underline cursor-pointer">
+              <span
+                onClick={handleRegisterClick}
+                className="font-semibold text-mainColor hover:underline cursor-pointer"
+              >
                 Register Here
               </span>
             </p>

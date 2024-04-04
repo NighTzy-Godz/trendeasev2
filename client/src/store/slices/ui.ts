@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface UIState {
   colorTheme: string;
   showLoginModal: boolean;
+  showRegisterUserModal: boolean;
 }
 
 const initialState: UIState = {
   colorTheme: "dark",
   showLoginModal: false,
+  showRegisterUserModal: false,
 };
 
 const ui = createSlice({
@@ -20,9 +22,13 @@ const ui = createSlice({
     setShowLoginModal: (ui, action) => {
       ui.showLoginModal = action.payload;
     },
+    setShowRegisterUserModal: (ui, action) => {
+      ui.showRegisterUserModal = action.payload;
+    },
   },
 });
 
-export const { setColorTheme, setShowLoginModal } = ui.actions;
+export const { setColorTheme, setShowRegisterUserModal, setShowLoginModal } =
+  ui.actions;
 
 export default ui.reducer;
