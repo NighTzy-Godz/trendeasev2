@@ -13,6 +13,7 @@ import {
   setShowRegisterUserModal,
 } from "../../../store/slices/ui";
 import { setAuthToken } from "../../../store/slices/auth";
+import { renderError } from "../../../utils/utils";
 
 interface LoginModalProps {
   isShow: boolean;
@@ -32,14 +33,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   } = useForm<LoginData>();
 
   useEffect(() => {
-    if (error && "originalStatus" in error) {
-      if (error.originalStatus >= 500) {
-        toast.error("Unexpected Error Happened" as string, {
-          toastId: "Login Unexpected",
-        });
-      }
-    }
-
+    if (error) renderError(error);
     if (isSuccess) {
       toast.success("Successfully Logged In!");
       dispatch(setAuthToken(data));

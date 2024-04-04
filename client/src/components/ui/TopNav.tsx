@@ -37,7 +37,7 @@ function TopNav() {
   useEffect(() => {
     if (windowWidth > 1024) setNavToggle(false);
   }, [windowWidth]);
-  console.log(navToggle);
+
   return (
     <nav className="bg-bgColor py-4 ">
       <div className="container mx-auto relative">

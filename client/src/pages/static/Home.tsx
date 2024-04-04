@@ -1,6 +1,4 @@
 import React from "react";
-import TopNav from "../../components/ui/TopNav";
-import { Outlet } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
@@ -39,8 +37,6 @@ function Home() {
         onModalClose={handleCloseRegisterModal}
         isShow={showRegisterUser}
       />
-      <TopNav />
-      <Outlet />
     </React.Fragment>
   );
 }

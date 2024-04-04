@@ -12,6 +12,7 @@ import {
   setShowLoginModal,
   setShowRegisterUserModal,
 } from "../../../store/slices/ui";
+import { renderError } from "../../../utils/utils";
 
 interface RegisterModalProps {
   isShow: boolean;
@@ -30,9 +31,7 @@ function RegisterModal({ isShow, onModalClose }: RegisterModalProps) {
   } = useForm<RegisterUserData>();
 
   useEffect(() => {
-    if (error && "originalStatus" in error) {
-      toast.error(error.data, { toastId: "Register User Error" });
-    }
+    if (error) renderError(error);
     if (isSuccess) {
       toast.success(
         `Successfully created the account for ${data.firstName} ${data.lastName}!`
