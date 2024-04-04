@@ -37,7 +37,7 @@ function TopNav() {
   useEffect(() => {
     if (windowWidth > 1024) setNavToggle(false);
   }, [windowWidth]);
-
+  console.log(navToggle);
   return (
     <nav className="bg-bgColor py-4 ">
       <div className="container mx-auto relative">
@@ -49,11 +49,27 @@ function TopNav() {
             </h1>
           </div>
 
-          <div
-            className="lg:hidden   order-1"
-            onClick={() => setNavToggle(!navToggle)}
-          >
-            <RxHamburgerMenu className="w-6 h-6 text-textColor" />
+          <div className="flex items-center gap-3    order-1 lg:order-3">
+            <ul className="flex lg:gap-5 gap-3 items-center order-1">
+              <li>
+                <FaUser
+                  className="w-6 h-6 text-textColor cursor-pointer font-semibold"
+                  onClick={() => dispatch(setShowLoginModal(true))}
+                />
+              </li>
+              <li>
+                <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+              </li>
+              <li>
+                <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+              </li>
+            </ul>
+            <div
+              className="lg:hidden order-2"
+              onClick={() => setNavToggle(!navToggle)}
+            >
+              <RxHamburgerMenu className="w-6 h-6 text-textColor" />
+            </div>
           </div>
           <div
             className={`lg:flex lg:justify-between order-2 w-full  ${
@@ -90,20 +106,6 @@ function TopNav() {
                   <IoSearch className="h-5 w-5 text-textColor" />
                 </button>
               </div>
-              <ul className="flex gap-5 items-center">
-                <li>
-                  <FaUser
-                    className="w-6 h-6 text-textColor cursor-pointer font-semibold"
-                    onClick={() => dispatch(setShowLoginModal(true))}
-                  />
-                </li>
-                <li>
-                  <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
-                </li>
-                <li>
-                  <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
-                </li>
-              </ul>
             </div>
           </div>
         </div>
@@ -113,3 +115,19 @@ function TopNav() {
 }
 
 export default TopNav;
+{
+  /* <ul className="flex gap-5 items-center">
+<li>
+  <FaUser
+    className="w-6 h-6 text-textColor cursor-pointer font-semibold"
+    onClick={() => dispatch(setShowLoginModal(true))}
+  />
+</li>
+<li>
+  <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+</li>
+<li>
+  <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+</li>
+</ul> */
+}

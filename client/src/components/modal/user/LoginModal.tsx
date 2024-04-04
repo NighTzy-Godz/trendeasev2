@@ -12,6 +12,7 @@ import {
   setShowLoginModal,
   setShowRegisterUserModal,
 } from "../../../store/slices/ui";
+import { setAuthToken } from "../../../store/slices/auth";
 
 interface LoginModalProps {
   isShow: boolean;
@@ -21,7 +22,7 @@ interface LoginModalProps {
 function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   const dispatch = useDispatch();
   const [loginUser, result] = useLoginUserMutation();
-  const { error, isLoading, isSuccess } = result;
+  const { error, data, isLoading, isSuccess } = result;
 
   const {
     register,
@@ -41,7 +42,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
 
     if (isSuccess) {
       toast.success("Successfully Logged In!");
-
+      dispatch(setAuthToken(data));
       reset();
     }
   }, [result]);
