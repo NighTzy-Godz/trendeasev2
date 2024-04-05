@@ -11,3 +11,10 @@ export interface RegisterUserData {
   password: string;
   confirmPassword: string;
 }
+
+export interface DecodedUser {
+  fullName: string;
+  pfp: string;
+  store: string;
+  _id: string;
+}
