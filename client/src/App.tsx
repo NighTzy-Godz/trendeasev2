@@ -8,6 +8,7 @@ import { RootState } from "./store/store";
 import "animate.css";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, Zoom } from "react-toastify";
+import UserProfile from "./pages/user/UserProfile";
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function App() {
       <Routes>
         <Route path="/" element={<HomeLayout />}>
           <Route index element={<Home />} />
+
+          <Route path="/user/profile" element={<UserProfile />} />
         </Route>
       </Routes>
     </BrowserRouter>

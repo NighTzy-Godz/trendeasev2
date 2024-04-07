@@ -75,7 +75,7 @@ function TopNav({ token }: TopNavProps) {
                   />
                 </li>
               ) : (
-                <Link to="/smthg" className="w-8 h-8">
+                <Link to="/user/profile" className="w-8 h-8">
                   {" "}
                   <img
                     className="w-8 h-8 block rounded-full"
