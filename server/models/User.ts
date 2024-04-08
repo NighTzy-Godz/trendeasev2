@@ -13,7 +13,7 @@ interface IUserModel extends Document {
   email: string;
   contact: string;
   password: string;
-  dateOfBirth?: string;
+  dateOfBirth?: Date;
   address: string;
   profilePicture: string;
 

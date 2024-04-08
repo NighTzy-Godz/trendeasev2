@@ -77,11 +77,17 @@ export const updateUserValidator = (
         "string.pattern.base": "Contact should be 11 digit long",
       }),
 
-    address: Joi.string().min(10).max(400).trim().optional().messages({
-      "string.base": "Address is a type of string",
-      "string.min": "Address should have atleast 10 characters minimum",
-      "string.max": "Address can only have 400 characters",
-    }),
+    address: Joi.string()
+      .min(10)
+      .max(400)
+      .trim()
+      .allow("")
+      .optional()
+      .messages({
+        "string.base": "Address is a type of string",
+        "string.min": "Address should have atleast 10 characters",
+        "string.max": "Address can only have 400 characters",
+      }),
   });
   return schema.validate(data);
 };

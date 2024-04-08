@@ -132,3 +132,20 @@ export const updateUser = async (
     next(error);
   }
 };
+
+export const getUserData = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const currUserId = req.user?._id;
+
+    const currUser = await User.findOne({ _id: currUserId });
+    if (!currUser) return res.status(404).send("User did not found");
+
+    res.json(currUser);
+  } catch (error) {
+    next(error);
+  }
+};
