@@ -26,3 +26,16 @@ export interface UpdateUserProfileData {
   contact: string;
   address?: string;
 }
+
+export interface IUser {
+  firstName: string;
+  lastName: string;
+  email: string;
+  contact: string;
+  password: string;
+  dateOfBirth?: Date;
+  address: string;
+  profilePicture: string;
+
+  store?: string;
+}

@@ -13,8 +13,11 @@ import {
 import { renderError } from "../../utils/utils";
 import { toast } from "react-toastify";
 import ProfileNav from "../../components/ui/ProfileNav";
+import { useDispatch } from "react-redux";
+import { setCurrUser } from "../../store/slices/user";
 
 function UserProfile() {
+  const dispatch = useDispatch();
   const [updateUser, result] = useUpdateUserMutation();
   const { error, isSuccess } = result;
   const { data } = useGetUserDataQuery("");
@@ -45,7 +48,9 @@ function UserProfile() {
     }
   }, [result, error, isSuccess]);
 
-  useEffect(() => {}, [data]);
+  useEffect(() => {
+    if (data) dispatch(setCurrUser(data));
+  }, [data]);
 
   const handleUpdateUserSubmit = (data: UpdateUserProfileData) => {
     updateUser(data);

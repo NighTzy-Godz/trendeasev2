@@ -10,6 +10,7 @@ function ProfileNav() {
   const hasStore = useSelector(
     (state: RootState) => state.auth.decodedUser?.store
   );
+  const currUser = useSelector((state: RootState) => state.currUser.currUser);
   const renderProfileLinks = userProfileLinks.map((item) => {
     return (
       <li className="px-4 py-1 mb-2 w-full block " key={item.id}>
@@ -50,7 +51,7 @@ function ProfileNav() {
         </div>
         <div className="flex justify-center">
           <h3 className="font-kanit text-2xl text-mainColor">
-            Aser James Hubero
+            {currUser?.firstName} {currUser?.lastName}
           </h3>
         </div>
       </div>

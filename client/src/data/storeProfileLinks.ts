@@ -5,6 +5,16 @@ const storeProfileLinks = [
     name: "Manage Orders",
     path: "/store/manageOrders",
   },
+  {
+    id: 2,
+    name: "Manage Products",
+    path: "/store/manageProducts",
+  },
+  {
+    id: 3,
+    name: "Create Product",
+    path: "/store/createProduct",
+  },
 ];
 
 export default storeProfileLinks;
