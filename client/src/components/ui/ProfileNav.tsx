@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import userProfileLinks from "../../data/userProfileLinks";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -9,8 +9,9 @@ function ProfileNav() {
   const hasStore = useSelector(
     (state: RootState) => state.auth.decodedUser?.store
   );
-  const currUser = useSelector((state: RootState) => state.currUser.currUser);
 
+  const currUser = useSelector((state: RootState) => state.currUser.currUser);
+  useEffect(() => {}, [currUser]);
   const profileNavClass = "font-kanit text-textColor text-xl  w-full ";
   const renderProfileLinks = userProfileLinks.map((item) => {
     return (
@@ -45,8 +46,8 @@ function ProfileNav() {
       <div className="mb-10">
         <div className="flex justify-center mb-3">
           <img
-            className="w-48 h-48 rounded-full"
-            src="https://scontent.fmnl9-2.fna.fbcdn.net/v/t39.30808-6/428614910_1573169330203091_1427140977305999776_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEq7J5oTpqrejAm1VnZly6Bu9mflR7u2RO72Z-VHu7ZEwKcBt5U9LWR6hkOX7IQJAgjoic0zGEMUBGXP4d-qKg9&_nc_ohc=X7ypD3i3QzgAb404K0M&_nc_ht=scontent.fmnl9-2.fna&oh=00_AfBYgEhhURu4pY0ESf0NISrw2hZbWIOOUm4OH0gfecUHYg&oe=661452EF"
+            className="w-48 h-48 rounded-full object-cover"
+            src={currUser?.profilePicture}
             alt=""
           />
         </div>

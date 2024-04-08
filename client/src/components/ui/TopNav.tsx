@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { IoStorefront } from "react-icons/io5";
 import { Link, NavLink } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
-import { FaUser } from "react-icons/fa";
-import { FaHeart } from "react-icons/fa";
+
+import { FaRegHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch } from "react-redux";
 import { setShowLoginModal } from "../../store/slices/ui";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import PFP from "../../assets/img/defaultUserPfp.png";
+import { FaRegUserCircle } from "react-icons/fa";
 
 interface TopNavProps {
   token: string | null;
@@ -62,24 +62,24 @@ function TopNav({ token }: TopNavProps) {
           <div className="flex items-center gap-3    order-1 lg:order-3">
             <ul className="flex lg:gap-5 gap-3 items-center order-1">
               <li>
-                <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+                <FaRegHeart className="w-7 h-7 text-textColor cursor-pointer font-semibold" />
               </li>
               <li>
-                <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
+                <FaCartShopping className="w-7 h-7 text-textColor cursor-pointer font-semibold" />
               </li>
               {!token ? (
                 <li>
-                  <FaUser
-                    className="w-6 h-6 text-textColor cursor-pointer font-semibold"
+                  <FaRegUserCircle
+                    className="w-8 h-8 text-textColor cursor-pointer font-semibold"
                     onClick={() => dispatch(setShowLoginModal(true))}
                   />
                 </li>
               ) : (
-                <Link to="/user/profile" className="w-8 h-8">
+                <Link to="/user/profile" className="w-7 h-7">
                   {" "}
                   <img
-                    className="w-8 h-8 block rounded-full"
-                    src="https://scontent.fmnl9-2.fna.fbcdn.net/v/t39.30808-6/428614910_1573169330203091_1427140977305999776_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=5f2048&_nc_eui2=AeEq7J5oTpqrejAm1VnZly6Bu9mflR7u2RO72Z-VHu7ZEwKcBt5U9LWR6hkOX7IQJAgjoic0zGEMUBGXP4d-qKg9&_nc_ohc=X7ypD3i3QzgAb404K0M&_nc_ht=scontent.fmnl9-2.fna&oh=00_AfBYgEhhURu4pY0ESf0NISrw2hZbWIOOUm4OH0gfecUHYg&oe=661452EF"
+                    className="w-7 h-7 block rounded-full object-cover"
+                    src={currUser?.pfp}
                     alt=""
                   />
                 </Link>
