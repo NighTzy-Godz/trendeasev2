@@ -18,3 +18,11 @@ export interface DecodedUser {
   store: string;
   _id: string;
 }
+
+export interface UpdateUserProfileData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  contact: string;
+  address?: string;
+}

@@ -1,10 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { LoginData, RegisterUserData } from "../../interfaces/userInterfaces";
+import {
+  LoginData,
+  RegisterUserData,
+  UpdateUserProfileData,
+} from "../../interfaces/userInterfaces";
+
+const token = localStorage.getItem("token") || "";
 
 const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api",
+    headers: {
+      "x-auth-token": token,
+    },
   }),
   endpoints(builder) {
     return {
@@ -14,6 +23,16 @@ const userApi = createApi({
             method: "POST",
             body,
             url: "/user/loginUser",
+          };
+        },
+      }),
+
+      updateUser: builder.mutation({
+        query: (body: UpdateUserProfileData) => {
+          return {
+            method: "PUT",
+            body,
+            url: "/user/updateUser",
           };
         },
       }),
@@ -30,5 +49,9 @@ const userApi = createApi({
   },
 });
 
-export const { useLoginUserMutation, useRegisterUserMutation } = userApi;
+export const {
+  useLoginUserMutation,
+  useRegisterUserMutation,
+  useUpdateUserMutation,
+} = userApi;
 export { userApi };

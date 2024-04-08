@@ -106,8 +106,8 @@ function TopNav({ token }: TopNavProps) {
               </li>
               <li>
                 {" "}
-                <NavLink to="/shop" className={navClassName}>
-                  Shop
+                <NavLink to="/allProducts" className={navClassName}>
+                  Products
                 </NavLink>
               </li>
               <li>
