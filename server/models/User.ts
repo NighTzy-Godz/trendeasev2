@@ -70,6 +70,7 @@ userSchema.methods.generateAuthToken = function (this): string {
     _id: this._id,
     fullName: this.firstName + " " + this.lastName,
     store: this.store,
+    pfp: this.profilePicture,
   };
   return jwt.sign(payload, "jwtSecretKey");
 };

@@ -1,8 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { LoginUser, RegisterUser } from "../interface/userInterface";
+import {
+  LoginUser,
+  RegisterUser,
+  UserProfileUpdate,
+} from "../interface/userInterface";
 import {
   loginUserValidator,
   registerUserValidator,
+  updateUserValidator,
 } from "../validator/userValidator";
 import bcrypt from "bcrypt";
 import User from "../models/User";
@@ -52,7 +57,7 @@ export const registerUser = async (
 
     await newUser.save();
 
-    res.send(newUser);
+    res.json(newUser);
   } catch (error) {
     next(error);
   }
@@ -81,7 +86,48 @@ export const loginUser = async (
 
     const token = existingUser.generateAuthToken();
 
-    res.send(token);
+    res.json(token);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { firstName, lastName, email, contact, address }: UserProfileUpdate =
+      req.body;
+
+    const { error } = updateUserValidator(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    const currUserId = req.user?._id;
+    const currUser = await User.findOne({ _id: currUserId });
+    if (!currUser) return res.status(404).send("User did not found");
+
+    const existingEmail = await User.findOne({
+      email,
+      _id: { $ne: currUserId },
+    });
+    if (existingEmail)
+      return res.status(409).send("User with this email already exist");
+
+    const existingContact = await User.findOne({
+      contact,
+      _id: { $ne: currUserId },
+    });
+    if (existingContact)
+      return res.status(409).send("User with this contact already exist");
+
+    currUser.set({ firstName, lastName, email, contact });
+    if (address) currUser.address = address;
+
+    await currUser.save();
+
+    res.json(currUser);
   } catch (error) {
     next(error);
   }

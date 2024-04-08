@@ -47,6 +47,45 @@ export const registerUserValidator = (
   return schema.validate(data);
 };
 
+export const updateUserValidator = (
+  data: RegisterUser
+): Joi.ValidationResult => {
+  const schema = Joi.object({
+    firstName: Joi.string().required().messages({
+      "string.base": "First Name is a type of string",
+      "any.required": "First Name is required field",
+      "string.empty": "First Name is a required field",
+    }),
+    lastName: Joi.string().required().messages({
+      "string.base": "Last Name is a type of string",
+      "any.required": "Last Name is required field",
+      "string.empty": "Last Name is a required field",
+    }),
+
+    email: Joi.string().required().messages({
+      "string.base": "Email is a type of string",
+      "any.required": "Email is required field",
+      "string.empty": "Email is a required field",
+    }),
+    contact: Joi.string()
+      .pattern(/^[0-9]{11}$/)
+      .required()
+      .messages({
+        "string.base": "Contact is a type of string",
+        "any.required": "Contact is required field",
+        "string.empty": "Contact is a required field",
+        "string.pattern.base": "Contact should be 11 digit long",
+      }),
+
+    address: Joi.string().min(10).max(400).trim().optional().messages({
+      "string.base": "Address is a type of string",
+      "string.min": "Address should have atleast 10 characters minimum",
+      "string.max": "Address can only have 400 characters",
+    }),
+  });
+  return schema.validate(data);
+};
+
 export const loginUserValidator = (data: LoginUser): Joi.ValidationResult => {
   const schema = Joi.object({
     email: Joi.string().required().messages({
