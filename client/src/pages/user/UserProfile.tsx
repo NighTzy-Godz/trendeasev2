@@ -6,18 +6,34 @@ import InputLabel from "../../components/common/InputLabel";
 import { useForm } from "react-hook-form";
 import { UpdateUserProfileData } from "../../interfaces/userInterfaces";
 import InputError from "../../components/common/InputError";
-import { useUpdateUserMutation } from "../../store/apis/userApi";
+import {
+  useGetUserDataQuery,
+  useUpdateUserMutation,
+} from "../../store/apis/userApi";
 import { renderError } from "../../utils/utils";
 import { toast } from "react-toastify";
 
 function UserProfile() {
   const [updateUser, result] = useUpdateUserMutation();
   const { error, isSuccess } = result;
+  const { data } = useGetUserDataQuery("");
+
+  const values: UpdateUserProfileData = {
+    firstName: data?.firstName,
+    lastName: data?.lastName,
+    email: data?.email,
+    contact: data?.contact,
+
+    address: data?.address,
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<UpdateUserProfileData>();
+  } = useForm<UpdateUserProfileData>({
+    values,
+  });
 
   useEffect(() => {
     if (error) {

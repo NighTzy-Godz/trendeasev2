@@ -17,6 +17,15 @@ const userApi = createApi({
   }),
   endpoints(builder) {
     return {
+      getUserData: builder.query({
+        query: () => {
+          return {
+            method: "GET",
+            url: "/user/getUserData",
+          };
+        },
+      }),
+
       loginUser: builder.mutation({
         query: (body: LoginData) => {
           return {
@@ -53,5 +62,6 @@ export const {
   useLoginUserMutation,
   useRegisterUserMutation,
   useUpdateUserMutation,
+  useGetUserDataQuery,
 } = userApi;
 export { userApi };
