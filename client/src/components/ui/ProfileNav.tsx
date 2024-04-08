@@ -6,11 +6,12 @@ import { RootState } from "../../store/store";
 import storeProfileLinks from "../../data/storeProfileLinks";
 
 function ProfileNav() {
-  const profileNavClass = "font-kanit text-textColor text-xl  w-full ";
   const hasStore = useSelector(
     (state: RootState) => state.auth.decodedUser?.store
   );
   const currUser = useSelector((state: RootState) => state.currUser.currUser);
+
+  const profileNavClass = "font-kanit text-textColor text-xl  w-full ";
   const renderProfileLinks = userProfileLinks.map((item) => {
     return (
       <li className="px-4 py-1 mb-2 w-full block " key={item.id}>

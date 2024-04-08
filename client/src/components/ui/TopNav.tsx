@@ -136,19 +136,3 @@ function TopNav({ token }: TopNavProps) {
 }
 
 export default TopNav;
-{
-  /* <ul className="flex gap-5 items-center">
-<li>
-  <FaUser
-    className="w-6 h-6 text-textColor cursor-pointer font-semibold"
-    onClick={() => dispatch(setShowLoginModal(true))}
-  />
-</li>
-<li>
-  <FaHeart className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
-</li>
-<li>
-  <FaCartShopping className="w-6 h-6 text-textColor cursor-pointer font-semibold" />
-</li>
-</ul> */
-}

@@ -14,6 +14,7 @@ import {
 } from "../../../store/slices/ui";
 import { setAuthToken } from "../../../store/slices/auth";
 import { renderError } from "../../../utils/utils";
+import { useNavigate } from "react-router-dom";
 
 interface LoginModalProps {
   isShow: boolean;
@@ -21,6 +22,7 @@ interface LoginModalProps {
 }
 
 function LoginModal({ isShow, onModalClose }: LoginModalProps) {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [loginUser, result] = useLoginUserMutation();
   const { error, data, isLoading, isSuccess } = result;
@@ -38,6 +40,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
       toast.success("Successfully Logged In!");
       dispatch(setAuthToken(data));
       reset();
+      navigate("/user/profile");
     }
   }, [result]);
 

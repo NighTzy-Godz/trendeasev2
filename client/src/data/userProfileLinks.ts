@@ -18,7 +18,7 @@ const userProfileLinks = [
   {
     id: 4,
     name: "Sign Out",
-    path: "/user/signOut",
+    path: "/logout",
   },
 ];
 
