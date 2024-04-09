@@ -14,6 +14,7 @@ import LogOut from "./pages/static/LogOut";
 import CreateStore from "./pages/store/CreateStore";
 import { setCurrUser } from "./store/slices/user";
 import { useGetUserDataQuery } from "./store/apis/userApi";
+import CreateProduct from "./pages/store/CreateProduct";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -40,6 +41,7 @@ function App() {
           <Route path="/user/profile" element={<UserProfile />} />
 
           <Route path="/store/createStore" element={<CreateStore />} />
+          <Route path="/store/createProduct" element={<CreateProduct />} />
 
           <Route path="/logout" element={<LogOut />} />
         </Route>

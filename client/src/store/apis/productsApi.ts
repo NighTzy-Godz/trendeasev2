@@ -1,32 +1,23 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { CreateProductData } from "../../interfaces/productInterfaces";
 
 const productsApi = createApi({
   reducerPath: "products",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api",
   }),
-  tagTypes: ["Product"],
+
   endpoints(builder) {
     return {
       addProduct: builder.mutation({
-        invalidatesTags: ["Product"],
-        query: () => {
+        query: (body: CreateProductData) => {
           return {
             method: "POST",
-            url: "/",
-          };
-        },
-      }),
-
-      getAllProducts: builder.query({
-        // providesTags: (result, error, user) => {
-        //   return [{ type: "Product", id: user.id }];
-        // },
-        query: () => {
-          return {
-            url: "/product/getAllProducts",
-
-            method: "GET",
+            url: "/product/createProduct",
+            body,
+            headers: {
+              "x-auth-token": localStorage.getItem("token") || "",
+            },
           };
         },
       }),
@@ -35,5 +26,5 @@ const productsApi = createApi({
 });
 
 // productsApi.useGetAllProductsQuery()
-export const { useGetAllProductsQuery } = productsApi;
+export const { useAddProductMutation } = productsApi;
 export { productsApi };

@@ -8,7 +8,9 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       <input
         ref={ref}
         {...props}
-        className={`w-full py-2 px-4 rounded-md text-slate-700 border focus:border-mainColor focus:ring-mainColor outline-none font-kanit border-slate-300 ${className}`}
+        className={`w-full py-2 px-4 rounded-md ${
+          props.type !== "file" ? "text-slate-700" : "text-textColor"
+        }  border focus:border-mainColor focus:ring-mainColor outline-none font-kanit border-slate-300 ${className}`}
       />
     );
   }

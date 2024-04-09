@@ -45,7 +45,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     useEffect(() => {
       let timerId: number;
       if (isLoading) {
-        if (count > 5) {
+        if (count > 2) {
           setMsg(
             "Please be patient, it may take some time to complete this action "
           );

@@ -77,7 +77,7 @@ function CreateStore() {
                   )}
                 </div>
                 <div className="">
-                  <Button isLoading={isLoading}>Submit</Button>
+                  <Button isLoading={isLoading}>Create Store</Button>
                 </div>
               </form>
             </div>
