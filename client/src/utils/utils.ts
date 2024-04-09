@@ -5,6 +5,8 @@ import { twMerge } from "tailwind-merge";
 import { FetchBaseQueryError } from "@reduxjs/toolkit/query";
 import { SerializedError } from "@reduxjs/toolkit/react";
 import { toast } from "react-toastify";
+import { RootState } from "../store/store";
+import { useSelector } from "react-redux";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

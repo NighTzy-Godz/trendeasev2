@@ -6,10 +6,6 @@ import { RootState } from "../../store/store";
 import storeProfileLinks from "../../data/storeProfileLinks";
 
 function ProfileNav() {
-  const hasStore = useSelector(
-    (state: RootState) => state.auth.decodedUser?.store
-  );
-
   const currUser = useSelector((state: RootState) => state.currUser.currUser);
   useEffect(() => {}, [currUser]);
   const profileNavClass = "font-kanit text-textColor text-xl  w-full ";
@@ -25,7 +21,7 @@ function ProfileNav() {
   });
 
   const renderStoreLinks = () => {
-    if (!hasStore)
+    if (!currUser?.store)
       return (
         <li className="px-4 py-1 mb-2 w-full block">
           <NavLink to="/store/createStore" className={profileNavClass}>

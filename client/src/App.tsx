@@ -11,17 +11,25 @@ import { ToastContainer, Zoom } from "react-toastify";
 import UserProfile from "./pages/user/UserProfile";
 import AllProducts from "./pages/products/AllProducts";
 import LogOut from "./pages/static/LogOut";
+import CreateStore from "./pages/store/CreateStore";
+import { setCurrUser } from "./store/slices/user";
+import { useGetUserDataQuery } from "./store/apis/userApi";
+
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
+  const currUser = useSelector((state: RootState) => state.currUser.currUser);
   const dispatch = useDispatch();
-
+  const { data } = useGetUserDataQuery("");
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", colorTheme);
   }, []);
 
+  useEffect(() => {
+    if (!currUser && data) dispatch(setCurrUser(data));
+  }, [data, currUser]);
+
   return (
     <BrowserRouter>
-      {" "}
       <ToastContainer transition={Zoom} autoClose={2500} />
       <Routes>
         <Route path="/" element={<HomeLayout />}>
@@ -30,6 +38,8 @@ function App() {
           <Route path="/allProducts" element={<AllProducts />} />
 
           <Route path="/user/profile" element={<UserProfile />} />
+
+          <Route path="/store/createStore" element={<CreateStore />} />
 
           <Route path="/logout" element={<LogOut />} />
         </Route>

@@ -5,15 +5,10 @@ import {
   UpdateUserProfileData,
 } from "../../interfaces/userInterfaces";
 
-const token = localStorage.getItem("token") || "";
-
 const userApi = createApi({
   reducerPath: "user",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api",
-    headers: {
-      "x-auth-token": token,
-    },
   }),
   endpoints(builder) {
     return {
@@ -22,6 +17,9 @@ const userApi = createApi({
           return {
             method: "GET",
             url: "/user/getUserData",
+            headers: {
+              "x-auth-token": localStorage.getItem("token") || "",
+            },
           };
         },
       }),

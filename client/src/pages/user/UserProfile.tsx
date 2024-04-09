@@ -15,9 +15,10 @@ import { toast } from "react-toastify";
 import ProfileNav from "../../components/ui/ProfileNav";
 import { useDispatch } from "react-redux";
 import { setCurrUser } from "../../store/slices/user";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
 
 function UserProfile() {
-  const dispatch = useDispatch();
   const [updateUser, result] = useUpdateUserMutation();
   const { error, isSuccess } = result;
   const { data } = useGetUserDataQuery("");
@@ -47,10 +48,6 @@ function UserProfile() {
       toast.success("Successfully Updated Your Account!");
     }
   }, [result, error, isSuccess]);
-
-  useEffect(() => {
-    if (data) dispatch(setCurrUser(data));
-  }, [data]);
 
   const handleUpdateUserSubmit = (data: UpdateUserProfileData) => {
     updateUser(data);
