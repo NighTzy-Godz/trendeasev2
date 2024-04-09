@@ -6,10 +6,11 @@ export const createStoreValidator = (
 ): Joi.ValidationResult => {
   const schema = Joi.object({
     storeName: Joi.string().required().messages({
-      "string.required": "Store Name is a required Field",
+      "string.required": "Store Name is a required field",
       "string.base": "Store Name should be a type of string",
     }),
-    description: Joi.string().messages({
+    description: Joi.string().required().messages({
+      "string.required": "Description is a required field",
       "string.base": "Description should be a type of string",
     }),
   });
