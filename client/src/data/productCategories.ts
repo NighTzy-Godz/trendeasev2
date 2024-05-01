@@ -32,7 +32,7 @@ const productCategories = [
   {
     id: 6,
     name: "Health and Beauty",
-    value: "Health and Beauty",
+    value: "health and beauty",
   },
 ];
 

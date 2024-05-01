@@ -12,8 +12,10 @@ import { toast } from "react-toastify";
 import { renderError } from "../../utils/utils";
 import Select from "../../components/common/Select";
 import productCategories from "../../data/productCategories";
+import { useNavigate } from "react-router-dom";
 
 function CreateProduct() {
+  const navigate = useNavigate();
   const [addProduct, result] = useAddProductMutation();
   const { error, isSuccess, isLoading, data } = result;
   const {
@@ -28,7 +30,7 @@ function CreateProduct() {
     if (isSuccess) {
       toast.success(`Successfully Created the Product ${data.productName} `);
       reset();
-      // NOTE: ADD A NAVIGATION TO /STORE/MYPRODUCTS
+      navigate("/store/manageProducts");
     }
   }, [error, isLoading, isSuccess]);
 

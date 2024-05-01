@@ -16,3 +16,17 @@ export interface CreateProductData {
   category: ProductCategory;
   img: FileList;
 }
+
+export interface IProduct {
+  _id: string;
+  productName: string;
+  description: string;
+  price: string;
+  quantity: string;
+  category: ProductCategory;
+  images: string[];
+  store: string;
+  relatedProducts: string | IProduct[];
+  createdAt: Date;
+  updatedAt: Date;
+}

@@ -15,6 +15,7 @@ import CreateStore from "./pages/store/CreateStore";
 import { setCurrUser } from "./store/slices/user";
 import { useGetUserDataQuery } from "./store/apis/userApi";
 import CreateProduct from "./pages/store/CreateProduct";
+import ManageStoreProducts from "./pages/store/ManageStoreProducts";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -42,6 +43,10 @@ function App() {
 
           <Route path="/store/createStore" element={<CreateStore />} />
           <Route path="/store/createProduct" element={<CreateProduct />} />
+          <Route
+            path="/store/manageProducts"
+            element={<ManageStoreProducts />}
+          />
 
           <Route path="/logout" element={<LogOut />} />
         </Route>

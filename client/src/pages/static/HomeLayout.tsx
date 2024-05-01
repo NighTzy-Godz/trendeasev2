@@ -16,7 +16,6 @@ function HomeLayout() {
   useEffect(() => {
     try {
       if (token) {
-        console.log("First Time Calling the TOken");
         localStorage.setItem("token", token);
         const user = jwtDecode(token);
         dispatch(setDecodedUser(user));
