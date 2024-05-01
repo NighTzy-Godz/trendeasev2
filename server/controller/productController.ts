@@ -40,7 +40,24 @@ export const createProduct = async (
       store: currStoreId,
     });
 
+    await product.save();
+
     res.send(product);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const getAllStoreProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { storeId } = req.params;
+    const storeProducts = await Product.find({ store: storeId });
+
+    res.json(storeProducts);
   } catch (error) {
     next(error);
   }

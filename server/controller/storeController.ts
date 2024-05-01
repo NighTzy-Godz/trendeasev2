@@ -4,6 +4,7 @@ import { createStoreValidator } from "../validator/storeValidator";
 import Store from "../models/Store";
 import User from "../models/User";
 import mongoose from "mongoose";
+import Product from "../models/Product";
 
 export const createStore = async (
   req: Request,
