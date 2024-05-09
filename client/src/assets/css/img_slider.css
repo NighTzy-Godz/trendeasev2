@@ -1,0 +1,41 @@
+.slick-track {
+  display: flex !important;
+}
+
+.slick-slide > div {
+  padding: 0 7px;
+}
+
+.product_main_img {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 30px;
+  height: 500px;
+  width: 100%;
+}
+
+.product_main_img img {
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  width: 100%;
+}
+
+.img_slides {
+  margin-right: 10px;
+  height: 100px;
+}
+
+.img_slides img {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  cursor: pointer;
+  object-fit: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.currImg img {
+  border: 2px solid rgb(var(--main-color));
+}

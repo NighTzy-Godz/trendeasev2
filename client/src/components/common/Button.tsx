@@ -14,8 +14,9 @@ const btnVariants = cva(
       variant: {
         default:
           "bg-mainColor text-textColor hover:bg-mainColorHover focus:ring-textColor",
-        success: "bg-green-600 text-white",
-        error: "bg-red-500 text-white",
+        success: "bg-green-600 text-white hover:bg-green-700",
+        error: "bg-red-500 text-white hover:bg-red-600",
+        sub: "bg-textColor ",
       },
       size: {
         default: "h-10 py-2 px-4",

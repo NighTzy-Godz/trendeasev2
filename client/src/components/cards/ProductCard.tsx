@@ -7,11 +7,11 @@ interface ProductCardProps {
 }
 
 function ProductCard({ data }: ProductCardProps) {
-  const { images, productName, price } = data;
+  const { images, productName, price, _id } = data || {};
   return (
     <div>
-      <Link to="#">
-        <div className="h-52 ">
+      <Link to={`/product/${_id}`}>
+        <div className="h-72 ">
           <img
             className="h-full w-full object-cover"
             loading="lazy"

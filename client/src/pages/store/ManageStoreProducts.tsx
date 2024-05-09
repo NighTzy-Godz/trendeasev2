@@ -6,6 +6,7 @@ import { IProduct } from "../../interfaces/productInterfaces";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { useGetStoreProductsQuery } from "../../store/apis/productsApi";
+import ProductList from "../../components/containers/ProductList";
 
 function ManageStoreProducts() {
   const user = useSelector((state: RootState) => state.auth.decodedUser);
@@ -31,11 +32,7 @@ function ManageStoreProducts() {
           <div className="w-1/4">
             <ProfileNav />
           </div>
-          <div className="w-3/4">
-            <div className="grid grid-cols-4 gap-5">
-              {renderStoreProducts()}
-            </div>
-          </div>
+          <ProductList>{renderStoreProducts()}</ProductList>
         </div>
       </div>
     </div>

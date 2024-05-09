@@ -16,6 +16,10 @@ import { setCurrUser } from "./store/slices/user";
 import { useGetUserDataQuery } from "./store/apis/userApi";
 import CreateProduct from "./pages/store/CreateProduct";
 import ManageStoreProducts from "./pages/store/ManageStoreProducts";
+import ProductDetails from "./pages/products/ProductDetails";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import "./assets/css/img_slider.css";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -40,6 +44,8 @@ function App() {
           <Route path="/allProducts" element={<AllProducts />} />
 
           <Route path="/user/profile" element={<UserProfile />} />
+
+          <Route path="/product/:productId" element={<ProductDetails />} />
 
           <Route path="/store/createStore" element={<CreateStore />} />
           <Route path="/store/createProduct" element={<CreateProduct />} />

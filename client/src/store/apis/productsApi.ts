@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const productsApi = createApi({
   reducerPath: "products",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api",
+    baseUrl: "http://localhost:8080/api/product",
   }),
 
   tagTypes: ["Product", "StoreProduct"],
@@ -14,11 +14,20 @@ const productsApi = createApi({
         providesTags: ["StoreProduct"],
         query: (user) => {
           return {
-            url: `/product/getStoreProducts/${user?.store}`,
+            url: `/getStoreProducts/${user?.store}`,
             method: "GET",
             headers: {
               "x-auth-token": localStorage.getItem("token") || "",
             },
+          };
+        },
+      }),
+
+      getProductDetails: builder.query({
+        query: (productId) => {
+          return {
+            url: `/getProductDetails/${productId}`,
+            method: "GET",
           };
         },
       }),
@@ -28,7 +37,7 @@ const productsApi = createApi({
         query: (body) => {
           return {
             method: "POST",
-            url: "/product/createProduct",
+            url: "/createProduct",
             body,
             headers: {
               "x-auth-token": localStorage.getItem("token") || "",
@@ -40,5 +49,9 @@ const productsApi = createApi({
   },
 });
 
-export const { useAddProductMutation, useGetStoreProductsQuery } = productsApi;
+export const {
+  useAddProductMutation,
+  useGetStoreProductsQuery,
+  useGetProductDetailsQuery,
+} = productsApi;
 export { productsApi };
