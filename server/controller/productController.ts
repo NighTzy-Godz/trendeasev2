@@ -62,3 +62,20 @@ export const getAllStoreProducts = async (
     next(error);
   }
 };
+
+export const getProductDetails = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { productId } = req.params;
+
+    const product = await Product.findOne({ _id: productId });
+    if (!product) return res.status(404).send("Product did not found");
+
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+};

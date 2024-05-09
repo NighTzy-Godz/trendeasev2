@@ -3,6 +3,7 @@ import isAuth from "../middleware/isAuth";
 import {
   createProduct,
   getAllStoreProducts,
+  getProductDetails,
 } from "../controller/productController";
 import hasStore from "../middleware/hasStore";
 import { storage } from "../cloudinary";
@@ -12,6 +13,7 @@ const upload = multer({ storage });
 const app = Router();
 
 app.get("/getStoreProducts/:storeId", [isAuth, hasStore], getAllStoreProducts);
+app.get("/getProductDetails/:productId", getProductDetails);
 
 app.post(
   "/createProduct",
