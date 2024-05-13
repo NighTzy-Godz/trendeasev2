@@ -4,12 +4,14 @@ interface UIState {
   colorTheme: string;
   showLoginModal: boolean;
   showRegisterUserModal: boolean;
+  showUserCart: boolean;
 }
 
 const initialState: UIState = {
   colorTheme: "dark",
   showLoginModal: false,
   showRegisterUserModal: false,
+  showUserCart: false,
 };
 
 const ui = createSlice({
@@ -25,10 +27,17 @@ const ui = createSlice({
     setShowRegisterUserModal: (ui, action) => {
       ui.showRegisterUserModal = action.payload;
     },
+    setShowUserCart: (ui, action) => {
+      ui.showUserCart = action.payload;
+    },
   },
 });
 
-export const { setColorTheme, setShowRegisterUserModal, setShowLoginModal } =
-  ui.actions;
+export const {
+  setColorTheme,
+  setShowRegisterUserModal,
+  setShowLoginModal,
+  setShowUserCart,
+} = ui.actions;
 
 export default ui.reducer;

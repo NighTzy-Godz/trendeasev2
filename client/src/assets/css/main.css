@@ -21,6 +21,13 @@
   @apply text-mainColor;
 }
 
+/* html {
+  overflow-x: hidden;
+} */
+
+.cart.showCart {
+}
+
 @layer base {
   :root {
     --bg-color: 255, 255, 255;

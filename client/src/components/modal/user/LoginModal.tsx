@@ -50,6 +50,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   };
 
   const handleLoginSubmit = (data: LoginData) => {
+    dispatch(setShowLoginModal(false));
     loginUser(data);
   };
 

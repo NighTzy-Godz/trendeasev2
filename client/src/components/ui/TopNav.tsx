@@ -7,10 +7,11 @@ import { FaRegHeart } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { useDispatch } from "react-redux";
-import { setShowLoginModal } from "../../store/slices/ui";
+import { setShowLoginModal, setShowUserCart } from "../../store/slices/ui";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { FaRegUserCircle } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 interface TopNavProps {
   token: string | null;
@@ -48,6 +49,14 @@ function TopNav({ token }: TopNavProps) {
     if (windowWidth > 1024) setNavToggle(false);
   }, [windowWidth]);
 
+  const handleCartClick = () => {
+    if (!currUser) {
+      toast.error("Please Login First", { toastId: "Cart Login" });
+      return dispatch(setShowLoginModal(true));
+    }
+    return dispatch(setShowUserCart(true));
+  };
+
   return (
     <nav className="bg-bgColor py-4 ">
       <div className="container mx-auto relative">
@@ -65,7 +74,10 @@ function TopNav({ token }: TopNavProps) {
                 <FaRegHeart className="w-7 h-7 text-textColor cursor-pointer font-semibold" />
               </li>
               <li>
-                <FaCartShopping className="w-7 h-7 text-textColor cursor-pointer font-semibold" />
+                <FaCartShopping
+                  className="w-7 h-7 text-textColor cursor-pointer font-semibold"
+                  onClick={handleCartClick}
+                />
               </li>
               {!token ? (
                 <li>
