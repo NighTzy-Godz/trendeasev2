@@ -2,21 +2,69 @@ import React, { useEffect, useState } from "react";
 import { useGetProductDetailsQuery } from "../../store/apis/productsApi";
 import { Link, useParams } from "react-router-dom";
 import { IProduct } from "../../interfaces/productInterfaces";
-import Slider from "react-slick";
+
 import ImageCarousel from "../../components/ui/ImageCarousel";
 import Button from "../../components/common/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import { useAddToCartMutation } from "../../store/apis/cartApi";
+import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { setShowLoginModal, setShowUserCart } from "../../store/slices/ui";
 
 function ProductDetails() {
   const { productId } = useParams();
-  const { data } = useGetProductDetailsQuery(productId);
+  const dispatch = useDispatch();
 
-  const { productName, images, price, description, category, quantity } =
+  const { data } = useGetProductDetailsQuery(productId);
+  const [addCart, addCartResult] = useAddToCartMutation();
+
+  const currUser = useSelector((state: RootState) => state.auth.decodedUser);
+  const { productName, images, price, description, category, quantity, store } =
     (data as IProduct) || {};
 
   const [mainImg, setMainImg] = useState("");
+
   useEffect(() => {
     setMainImg(images?.[0]);
   }, [images]);
+
+  useEffect(() => {
+    if (addCartResult.isSuccess) dispatch(setShowUserCart(true));
+  }, [addCartResult]);
+
+  const handleCartClick = () => {
+    if (!currUser) {
+      toast.error("You need to Login first");
+      return dispatch(setShowLoginModal(true));
+    }
+    return addCart(productId);
+  };
+
+  const renderProductButtons = () => {
+    if (currUser?.store !== store)
+      return (
+        <React.Fragment>
+          <Button className="w-60" onClick={handleCartClick}>
+            Add To Cart
+          </Button>
+          <Button className="w-60" variant="sub">
+            Buy Now
+          </Button>
+        </React.Fragment>
+      );
+
+    return (
+      <React.Fragment>
+        {" "}
+        <Button className="w-60">Delete Product</Button>
+        <Button className="w-60" variant="sub">
+          Edit Product
+        </Button>
+      </React.Fragment>
+    );
+  };
+
   const handleImgClick = (imgLink: string) => {
     setMainImg(imgLink);
   };
@@ -83,12 +131,7 @@ function ProductDetails() {
               <p className="font-kanit text-textColor text-xl "> {category}</p>
             </div>
 
-            <div className="mb-5 flex gap-5">
-              <Button className="w-60">Add To Cart</Button>
-              <Button className="w-60" variant="sub">
-                Buy Now
-              </Button>
-            </div>
+            <div className="mb-5 flex gap-5">{renderProductButtons()}</div>
           </div>
         </div>
         <div className="mb-10">

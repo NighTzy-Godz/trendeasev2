@@ -24,14 +24,14 @@ function ImageCarousel({ mainImg, images, onImgClick }: ImageCarouselProps) {
         key={index}
         onClick={() => onImgClick(img)}
       >
-        <img src={img} key={index} />
+        <img src={img} key={index} loading="lazy" />
       </div>
     );
   });
   return (
     <React.Fragment>
       <div className="product_main_img">
-        <img src={mainImg} alt="" />
+        <img src={mainImg} alt="" loading="lazy" />
       </div>{" "}
       {images?.length > 1 && <Slider {...settings}>{renderImages}</Slider>}
     </React.Fragment>
