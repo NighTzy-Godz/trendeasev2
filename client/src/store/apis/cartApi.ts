@@ -5,9 +5,25 @@ const cartApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/cart",
   }),
+
+  tagTypes: ["CartItem"],
   endpoints(builder) {
     return {
+      getUserCart: builder.query({
+        providesTags: ["CartItem"],
+        query: () => {
+          return {
+            url: "/getUserCart",
+            method: "GET",
+            headers: {
+              "x-auth-token": localStorage.getItem("token") || "",
+            },
+          };
+        },
+      }),
+
       addToCart: builder.mutation({
+        invalidatesTags: ["CartItem"],
         query: (productId) => {
           return {
             url: `/addToCart/${productId}`,
@@ -22,6 +38,6 @@ const cartApi = createApi({
   },
 });
 
-export const { useAddToCartMutation } = cartApi;
+export const { useAddToCartMutation, useGetUserCartQuery } = cartApi;
 
 export { cartApi };
