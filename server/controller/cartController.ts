@@ -3,6 +3,25 @@ import { addToCartValidator } from "../validator/cartValidator";
 import Product from "../models/Product";
 import Cart from "../models/Cart";
 
+export const getUserCart = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const currUserId = req.user?._id;
+    if (!currUserId) {
+      return res.status(401).send("Unauthorized: User not authenticated");
+    }
+
+    const cartItems = await Cart.find({ user: currUserId }).populate("item");
+
+    res.json(cartItems);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addToCart = async (
   req: Request,
   res: Response,
