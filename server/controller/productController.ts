@@ -79,3 +79,17 @@ export const getProductDetails = async (
     next(error);
   }
 };
+
+export const getAllProducts = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const products = await Product.find();
+
+    res.json(products);
+  } catch (error) {
+    next(error);
+  }
+};

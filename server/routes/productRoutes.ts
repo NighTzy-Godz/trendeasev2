@@ -2,6 +2,7 @@ import { Router } from "express";
 import isAuth from "../middleware/isAuth";
 import {
   createProduct,
+  getAllProducts,
   getAllStoreProducts,
   getProductDetails,
 } from "../controller/productController";
@@ -11,6 +12,8 @@ import multer from "multer";
 
 const upload = multer({ storage });
 const app = Router();
+
+app.get("/getAllProducts", getAllProducts);
 
 app.get("/getStoreProducts/:storeId", [isAuth, hasStore], getAllStoreProducts);
 app.get("/getProductDetails/:productId", getProductDetails);

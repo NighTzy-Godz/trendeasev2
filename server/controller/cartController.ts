@@ -9,25 +9,29 @@ export const addToCart = async (
   next: NextFunction
 ) => {
   try {
-    const { quantity } = req.body;
     const currUserId = req.user?._id;
-    const productId = req.params;
+    const { productId } = req.params;
 
-    const { error } = addToCartValidator(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
+    if (!currUserId) {
+      return res.status(401).send("Unauthorized: User not authenticated");
+    }
 
-    const product = await Product.findOne({ _id: productId });
-    if (!product) return res.status(404).send("Product did not found");
+    const product = await Product.findById(productId);
+    if (!product) {
+      return res.status(404).send("Product not found");
+    }
 
-    const newCart = new Cart({
-      item: productId,
-      user: currUserId,
-      quantity,
-    });
+    let cartItem = await Cart.findOne({ item: productId, user: currUserId });
 
-    await newCart.save();
+    if (cartItem) {
+      cartItem.quantity += 1;
+    } else {
+      cartItem = new Cart({ item: productId, user: currUserId, quantity: 1 });
+    }
 
-    res.json(newCart);
+    await cartItem.save();
+
+    res.json(cartItem);
   } catch (error) {
     next(error);
   }
