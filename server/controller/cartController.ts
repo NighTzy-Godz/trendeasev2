@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { addToCartValidator } from "../validator/cartValidator";
+import { updateCartValidator } from "../validator/cartValidator";
 import Product from "../models/Product";
 import Cart from "../models/Cart";
 
@@ -51,6 +51,38 @@ export const addToCart = async (
     await cartItem.save();
 
     res.json(cartItem);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateCartQty = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { qty } = req.body;
+    const { cartId } = req.params;
+    const currUserId = req.user?._id;
+
+    const { error } = updateCartValidator(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    if (!currUserId)
+      return res.status(401).send("Unauthorized. Please authenticate first");
+
+    const cartFound = await Cart.findOne({
+      _id: cartId,
+      user: currUserId,
+    }).select("quantity");
+    if (!cartFound) return res.status(404).send("Cart Item did not found");
+
+    cartFound.quantity = qty;
+
+    await cartFound.save();
+
+    res.json(cartFound);
   } catch (error) {
     next(error);
   }

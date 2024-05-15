@@ -4,9 +4,9 @@ interface AddToCartData {
   quantity: number;
 }
 
-const addToCartValidator = (data: AddToCartData): Joi.ValidationResult => {
+const updateCartValidator = (data: AddToCartData): Joi.ValidationResult => {
   const schema = Joi.object({
-    quantity: Joi.number().min(1).required().messages({
+    qty: Joi.number().min(1).required().messages({
       "number.min": "Quantity Minimum number is 1",
       "number.required": "Quantity is a required field",
       "number.base": "Quantity should be a type of number",
@@ -17,4 +17,4 @@ const addToCartValidator = (data: AddToCartData): Joi.ValidationResult => {
   return schema.validate(data);
 };
 
-export { addToCartValidator };
+export { updateCartValidator };
