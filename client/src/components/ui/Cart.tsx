@@ -2,9 +2,14 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 
 import IMG from "../../assets/img/defaultStorePfp.png";
-import { useGetUserCartQuery } from "../../store/apis/cartApi";
+import {
+  useDeleteCartMutation,
+  useGetUserCartQuery,
+} from "../../store/apis/cartApi";
 import { ICart } from "../../interfaces/cartInterfaces";
-
+import Button from "../common/Button";
+import { MdDelete } from "react-icons/md";
+import CartCard from "../cards/CartCard";
 interface CartProps {
   isShow: boolean;
   onCartClose(): void;
@@ -16,39 +21,14 @@ function Cart({ isShow, onCartClose }: CartProps) {
 
   const renderCartItems = () => {
     if (userCart?.length === 0) return <h1>No Cart Available</h1>;
-    if (userCart) {
-      return userCart.map((cart) => {
-        return (
-          <div className="mb-5">
-            {" "}
-            <div className="flex ">
-              <div className="w-1/2 ">
-                <div className="h-32 w-32">
-                  {" "}
-                  <img
-                    src={cart.item.images?.[0]}
-                    alt=""
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </div>
-              <div className="w-1/2 ">
-                <h3 className="font-kanit text-bgColor text-xl whitespace-nowrap text-ellipsis overflow-hidden">
-                  {cart.item?.productName}
-                </h3>
-                <p className="font-kanit text-mainColor text-lg">
-                  P {cart.item?.price}
-                </p>
 
-                <p className="font-kanit mt-2 text-bgColor text-lg">
-                  Quantity: {cart.quantity}
-                </p>
-              </div>
-            </div>
-          </div>
-        );
-      });
-    }
+    return userCart?.map((cart) => {
+      return (
+        <React.Fragment key={cart._id}>
+          <CartCard cart={cart} />
+        </React.Fragment>
+      );
+    });
   };
 
   return (

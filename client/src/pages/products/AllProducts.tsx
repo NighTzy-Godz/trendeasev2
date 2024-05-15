@@ -11,7 +11,11 @@ function AllProducts() {
   const renderProducts = () => {
     if (products?.length === 0) return <h1>No Products Here</h1>;
     return products?.map((item) => {
-      return <ProductCard data={item} />;
+      return (
+        <React.Fragment key={item._id}>
+          <ProductCard data={item} />
+        </React.Fragment>
+      );
     });
   };
   return (

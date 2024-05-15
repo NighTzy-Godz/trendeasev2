@@ -34,10 +34,27 @@ const cartApi = createApi({
           };
         },
       }),
+
+      deleteCart: builder.mutation({
+        invalidatesTags: ["CartItem"],
+        query: (cartId) => {
+          return {
+            url: `/deleteCart/${cartId}`,
+            method: "DELETE",
+            headers: {
+              "x-auth-token": localStorage.getItem("token") || "",
+            },
+          };
+        },
+      }),
     };
   },
 });
 
-export const { useAddToCartMutation, useGetUserCartQuery } = cartApi;
+export const {
+  useAddToCartMutation,
+  useGetUserCartQuery,
+  useDeleteCartMutation,
+} = cartApi;
 
 export { cartApi };
