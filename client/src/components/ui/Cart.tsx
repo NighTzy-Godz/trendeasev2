@@ -36,7 +36,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
       {isShow && <div className="w-dvw top-0 h-dvh fixed bg-black/50 " />}
 
       <div
-        className={`transition duration-700 ease-in-out ${
+        className={`transition duration-700 ease-in-out  ${
           isShow ? "translate-x-0  delay-150 " : " translate-x-full"
         } w-80 h-dvh right-0  bg-textColor fixed top-0  `}
       >

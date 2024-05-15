@@ -21,6 +21,7 @@ const btnVariants = cva(
       size: {
         default: "h-10 py-2 px-4",
         sm: "h-8 px-2 py-1",
+        xs: "h-6 px-1 py-1",
       },
     },
     defaultVariants: {
