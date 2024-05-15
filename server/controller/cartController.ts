@@ -55,3 +55,28 @@ export const addToCart = async (
     next(error);
   }
 };
+
+export const deleteCart = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { cartId } = req.params;
+    const currUserId = req.user?._id;
+
+    if (!currUserId)
+      return res.status(401).send("Unauthorized: User not authenticated");
+
+    const cartItem = await Cart.findOneAndDelete({
+      _id: cartId,
+      user: currUserId,
+    });
+
+    if (!cartItem) return res.status(404).send("Cart Item did not found");
+
+    res.status(200).json(cartItem);
+  } catch (error) {
+    next(error);
+  }
+};
