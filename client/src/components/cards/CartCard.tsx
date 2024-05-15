@@ -51,9 +51,9 @@ function CartCard({ cart }: CartCardProps) {
     toast.success("Successfully Deleted the Cart Item!");
   };
   return (
-    <div className="mb-5">
+    <div className="mb-8">
       {" "}
-      <div className="flex ">
+      <div className="flex gap-x-4">
         <div className="w-1/2 ">
           <div className="h-32 w-32">
             {" "}
