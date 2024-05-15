@@ -11,6 +11,7 @@ import { useAddToCartMutation } from "../../store/apis/cartApi";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setShowLoginModal, setShowUserCart } from "../../store/slices/ui";
+import formatCurrency from "../../utils/formatCurrency";
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -108,11 +109,11 @@ function ProductDetails() {
 
             <div className="mb-8 ">
               <p className="tracking-[2px] font-kanit text-textColor text-4xl ">
-                P{price}
+                {formatCurrency(price)}
               </p>
             </div>
 
-            <div className="mb-8 flex gap-2 items-center">
+            <div className="mb-5 flex gap-2 items-center">
               <p className="font-kanit text-2xl text-mainColor">Quantity:</p>
               <p className="font-kanit text-textColor text-xl ">
                 {" "}
@@ -120,7 +121,7 @@ function ProductDetails() {
               </p>
             </div>
 
-            <div className="mb-8 flex gap-2 items-center">
+            <div className="mb-5 flex gap-2 items-center">
               <p className="font-kanit text-2xl text-mainColor">
                 Availability:
               </p>

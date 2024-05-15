@@ -11,6 +11,7 @@ import { setShowUserCart } from "../../store/slices/ui";
 import { toast } from "react-toastify";
 import { renderError } from "../../utils/utils";
 import CartCounter from "../ui/CartCounter";
+import formatCurrency from "../../utils/formatCurrency";
 
 interface CartCardProps {
   cart: ICart;
@@ -67,7 +68,9 @@ function CartCard({ cart }: CartCardProps) {
           <h3 className="leading-none font-kanit text-bgColor text-lg whitespace-nowrap text-ellipsis overflow-hidden">
             {cart.item?.productName}
           </h3>
-          <p className="font-kanit text-mainColor mb-3">P {cart.item?.price}</p>
+          <p className="font-kanit text-mainColor mb-3">
+            {formatCurrency(cart.item.price)}
+          </p>
 
           <CartCounter
             onDecreaseQty={handleDecreaseQty}

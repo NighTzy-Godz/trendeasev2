@@ -1,6 +1,7 @@
 import React from "react";
 import { IProduct } from "../../interfaces/productInterfaces";
 import { Link } from "react-router-dom";
+import formatCurrency from "../../utils/formatCurrency";
 
 interface ProductCardProps {
   data: IProduct;
@@ -13,7 +14,7 @@ function ProductCard({ data }: ProductCardProps) {
       <Link to={`/product/${_id}`}>
         <div className="h-72 ">
           <img
-            className="h-full w-full object-cover"
+            className="rounded-md h-full w-full object-cover"
             loading="lazy"
             src={images[0]}
             alt=""
@@ -24,7 +25,7 @@ function ProductCard({ data }: ProductCardProps) {
         <h3 className="font-kanit text-lg text-mainColor whitespace-nowrap text-ellipsis overflow-hidden">
           {productName}
         </h3>{" "}
-        <p className="font-kanit text-textColor ">P {price}</p>
+        <p className="font-kanit text-textColor ">{formatCurrency(price)}</p>
       </div>{" "}
     </div>
   );

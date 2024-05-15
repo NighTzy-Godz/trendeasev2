@@ -6,7 +6,10 @@ const cartApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/cart",
     prepareHeaders: (headers, { getState }) => {
-      const token = (getState() as RootState).auth.authToken;
+      const token =
+        localStorage.getItem("token") ||
+        (getState() as RootState).auth.authToken;
+
       if (token) {
         headers.set("x-auth-token", token);
       }
