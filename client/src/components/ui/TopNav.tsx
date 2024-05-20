@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
+import { useGetUserCartQuery } from "../../store/apis/cartApi";
 
 interface TopNavProps {
   token: string | null;
@@ -19,6 +20,7 @@ interface TopNavProps {
 
 function TopNav({ token }: TopNavProps) {
   const dispatch = useDispatch();
+  const { data: userCart } = useGetUserCartQuery("");
   const navClassName = `font-kanit text-lg text-textColor hover:text-mainColor`;
 
   const currUser = useSelector((state: RootState) => state.auth.decodedUser);
@@ -73,11 +75,20 @@ function TopNav({ token }: TopNavProps) {
               <li>
                 <FaRegHeart className="w-7 h-7 text-textColor cursor-pointer font-semibold" />
               </li>
-              <li>
-                <FaCartShopping
-                  className="w-7 h-7 text-textColor cursor-pointer font-semibold"
-                  onClick={handleCartClick}
-                />
+              <li className="relative">
+                <div
+                  data-cart-count={userCart?.length}
+                  className={`${
+                    userCart.length !== 0 &&
+                    "font-kanit after:h-5 after:w-5 after:bg-red-500 after:flex  after:items-center after:justify-center  after:content-[attr(data-cart-count)] after:absolute after:-top-3 after:-right-3 after:rounded-full text-sm text-white"
+                  }`}
+                >
+                  {" "}
+                  <FaCartShopping
+                    className="w-7 h-7 text-textColor cursor-pointer font-semibold"
+                    onClick={handleCartClick}
+                  />
+                </div>
               </li>
               {!token ? (
                 <li>
