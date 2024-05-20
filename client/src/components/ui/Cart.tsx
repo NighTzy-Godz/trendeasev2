@@ -7,6 +7,9 @@ import { ICart } from "../../interfaces/cartInterfaces";
 import CartCard from "../cards/CartCard";
 import { useDispatch } from "react-redux";
 import { setShowUserCart } from "../../store/slices/ui";
+import Button from "../common/Button";
+import formatCurrency from "../../utils/formatCurrency";
+import calculateSubtotal from "../../utils/calculateSubtotal";
 
 interface CartProps {
   isShow: boolean;
@@ -50,6 +53,17 @@ function Cart({ isShow, onCartClose }: CartProps) {
     });
   };
 
+  const subTotals = (): string[] => {
+    if (userCart) {
+      const totalSub = userCart.map((cart) => {
+        const numTotal = parseFloat(cart.item.price) * cart.quantity;
+        return numTotal.toString();
+      });
+      return totalSub;
+    }
+    return [];
+  };
+
   return (
     <React.Fragment>
       {isShow && <div className="w-dvw top-0 h-dvh fixed bg-black/50 " />}{" "}
@@ -76,11 +90,17 @@ function Cart({ isShow, onCartClose }: CartProps) {
               <h3 className="font-kanit font-semibold text-bgColor text-xl">
                 Subtotal
               </h3>
-              <p className="font-kanit text-xl text-mainColor">{2000}</p>
+              <p className="font-kanit text-xl text-mainColor">
+                {formatCurrency(calculateSubtotal(subTotals()))}
+              </p>
             </div>
             <p className="font-kanit leading-none text-sm text-bgColor">
               Taxes and shipping calculated at checkout
             </p>
+
+            <div className="mt-3">
+              <Button>Checkout</Button>
+            </div>
           </div>
         </div>
       </div>{" "}
