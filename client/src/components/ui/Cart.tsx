@@ -7,9 +7,10 @@ import { ICart } from "../../interfaces/cartInterfaces";
 import CartCard from "../cards/CartCard";
 import { useDispatch } from "react-redux";
 import { setShowUserCart } from "../../store/slices/ui";
-import Button from "../common/Button";
+import Button, { btnVariants } from "../common/Button";
 import formatCurrency from "../../utils/formatCurrency";
 import calculateSubtotal from "../../utils/calculateSubtotal";
+import { Link } from "react-router-dom";
 
 interface CartProps {
   isShow: boolean;
@@ -24,7 +25,6 @@ function Cart({ isShow, onCartClose }: CartProps) {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      console.log(cartRef.current);
       if (cartRef.current && !cartRef.current.contains(e.target as Node)) {
         dispatch(setShowUserCart(false));
       }
@@ -73,7 +73,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
           isShow ? "translate-x-0  delay-150 " : " translate-x-full"
         } w-80 h-dvh right-0  bg-textColor fixed top-0  flex flex-col z-50`}
       >
-        <div className="px-5 py-3 overflow-auto ">
+        <div className="px-5 py-3 overflow-auto h-full ">
           <div className="mb-10 flex items-center justify-between">
             <h3 className="font-kanit text-xl text-bgColor">Shopping Cart</h3>
             <IoClose
@@ -99,7 +99,12 @@ function Cart({ isShow, onCartClose }: CartProps) {
             </p>
 
             <div className="mt-3">
-              <Button>Checkout</Button>
+              <Link
+                to="/checkout"
+                className={btnVariants({ variant: "default" })}
+              >
+                Checkout
+              </Link>
             </div>
           </div>
         </div>

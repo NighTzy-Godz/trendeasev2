@@ -79,7 +79,7 @@ function TopNav({ token }: TopNavProps) {
                 <div
                   data-cart-count={userCart?.length}
                   className={`${
-                    userCart.length !== 0 &&
+                    userCart?.length !== 0 &&
                     "font-kanit after:h-5 after:w-5 after:bg-red-500 after:flex  after:items-center after:justify-center  after:content-[attr(data-cart-count)] after:absolute after:-top-3 after:-right-3 after:rounded-full text-sm text-white"
                   }`}
                 >
