@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { setShowLoginModal, setShowUserCart } from "../../store/slices/ui";
 import formatCurrency from "../../utils/formatCurrency";
+import { PreCheckoutItem } from "../../interfaces/orderInteraces";
 
 function ProductDetails() {
   const { productId } = useParams();
@@ -21,8 +22,16 @@ function ProductDetails() {
   const [addCart, addCartResult] = useAddToCartMutation();
 
   const currUser = useSelector((state: RootState) => state.auth.decodedUser);
-  const { productName, images, price, description, category, quantity, store } =
-    (data as IProduct) || {};
+  const {
+    productName,
+    images,
+    price,
+    description,
+    category,
+    quantity,
+    store,
+    _id,
+  } = (data as IProduct) || {};
 
   const [mainImg, setMainImg] = useState("");
 
@@ -42,6 +51,33 @@ function ProductDetails() {
     return addCart(productId);
   };
 
+  const handleBuyNow = () => {
+    const existingCheckoutItems = localStorage.getItem("checkoutItemsConfig");
+    if (existingCheckoutItems) localStorage.removeItem("checkoutItemsConfig");
+
+    const checkoutItem: PreCheckoutItem = {
+      product: _id,
+      quantity: 1,
+      price: price,
+      productOwner: store,
+      img: images[0],
+      productName: productName,
+    };
+
+    const checkoutItemsConfig = { clearCart: false, items: [checkoutItem] };
+
+    localStorage.setItem(
+      "checkoutItemsConfig",
+      JSON.stringify(checkoutItemsConfig)
+    );
+
+    if (!currUser) {
+      localStorage.setItem("redirectRoute", "/checkout");
+      toast.error("You need to Login first");
+      return dispatch(setShowLoginModal(true));
+    }
+  };
+
   const renderProductButtons = () => {
     if (currUser?.store !== store)
       return (
@@ -49,7 +85,7 @@ function ProductDetails() {
           <Button className="w-60" onClick={handleCartClick}>
             Add To Cart
           </Button>
-          <Button className="w-60" variant="sub">
+          <Button className="w-60" variant="sub" onClick={handleBuyNow}>
             Buy Now
           </Button>
         </React.Fragment>

@@ -40,6 +40,8 @@ function HomeLayout() {
   }, [token]);
 
   const handleCloseLoginModal = () => {
+    const redirectRoute = localStorage.getItem("redirectRoute");
+    if (redirectRoute) localStorage.removeItem("redirectRoute");
     dispatch(setShowLoginModal(false));
   };
 

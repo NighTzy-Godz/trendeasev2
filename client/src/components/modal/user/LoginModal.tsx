@@ -37,10 +37,18 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   useEffect(() => {
     if (error) renderError(error);
     if (isSuccess) {
+      const redirectRoute = localStorage.getItem("redirectRoute");
+
       toast.success("Successfully Logged In!");
       dispatch(setAuthToken(data));
       reset();
-      navigate("/user/profile");
+
+      if (redirectRoute) {
+        navigate(redirectRoute);
+        localStorage.removeItem("redirectRoute");
+      } else {
+        navigate("/user/profile");
+      }
     }
   }, [result]);
 
