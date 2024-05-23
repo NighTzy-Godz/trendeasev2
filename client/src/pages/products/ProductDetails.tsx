@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useGetProductDetailsQuery } from "../../store/apis/productsApi";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { IProduct } from "../../interfaces/productInterfaces";
 
 import ImageCarousel from "../../components/ui/ImageCarousel";
@@ -17,7 +17,7 @@ import { PreCheckoutItem } from "../../interfaces/orderInteraces";
 function ProductDetails() {
   const { productId } = useParams();
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const { data } = useGetProductDetailsQuery(productId);
   const [addCart, addCartResult] = useAddToCartMutation();
 
@@ -75,6 +75,8 @@ function ProductDetails() {
       localStorage.setItem("redirectRoute", "/checkout");
       toast.error("You need to Login first");
       return dispatch(setShowLoginModal(true));
+    } else {
+      navigate("/checkout");
     }
   };
 

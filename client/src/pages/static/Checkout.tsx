@@ -30,7 +30,7 @@ function Checkout() {
   const navigate = useNavigate();
   const [addOrder, result] = useAddOrderMutation();
   const { refetch: cartRefetch } = useGetUserCartQuery("");
-  // const { data } = useGetUserDataQuery("");
+  const { data: userData } = useGetUserDataQuery("");
   const [payMethod, setPayMethod] = useState(paymentMethod[0]);
   const [checkoutItems, setCheckoutItems] = useState<PreCheckoutItem[]>([]);
   const [clearCart, setClearCart] = useState(false);
@@ -55,11 +55,24 @@ function Checkout() {
     } catch (error) {}
   }, []);
 
+  const shippingAddress = userData?.address;
+
   const {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<AddOrderData>();
+    reset,
+  } = useForm<AddOrderData>({
+    defaultValues: {
+      shippingAddress,
+    },
+  });
+
+  useEffect(() => {
+    reset({
+      shippingAddress,
+    });
+  }, [reset, shippingAddress]);
 
   useEffect(() => {
     if (result.error) {
