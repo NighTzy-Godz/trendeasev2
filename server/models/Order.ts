@@ -39,11 +39,12 @@ interface IOrder extends Document {
 const orderSchema: Schema<IOrder> = new Schema<IOrder>({
   buyer: {
     type: Schema.Types.ObjectId,
-    ref: "Product",
+    ref: "User",
   },
   item: {
     product: {
       type: Schema.Types.ObjectId,
+      ref: "Product",
     },
     quantity: {
       type: String,
@@ -55,7 +56,7 @@ const orderSchema: Schema<IOrder> = new Schema<IOrder>({
     },
     productOwner: {
       type: Schema.Types.ObjectId,
-      ref: " Store",
+      ref: "Store",
     },
   },
 

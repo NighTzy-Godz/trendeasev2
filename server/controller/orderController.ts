@@ -6,6 +6,26 @@ import Product from "../models/Product";
 import Cart from "../models/Cart";
 import mongoose from "mongoose";
 
+export const getMyOrders = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const currUserId = req.user?._id;
+    if (!currUserId)
+      return res.status(401).send("You are not authorized by this time");
+
+    const currUserOrders = await Order.find({ buyer: currUserId })
+      .populate("item.productOwner item.product")
+      .populate("");
+
+    res.json(currUserOrders);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const addOrder = async (
   req: Request,
   res: Response,
