@@ -82,7 +82,7 @@ function Checkout() {
       toast.success("Successfully checked out the items");
       if (clearCart) cartRefetch();
 
-      navigate("/user/profile");
+      navigate("/user/myOrders");
     }
   }, [result]);
 
