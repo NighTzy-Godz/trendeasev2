@@ -19,7 +19,7 @@ interface IUserModel extends Document {
     street: string;
     province: string;
     municipality: string;
-    barangay: string;
+    baranggay: string;
   };
   profilePicture: string;
 

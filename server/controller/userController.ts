@@ -56,7 +56,7 @@ export const registerUser = async (
     newUser.password = await bcrypt.hash(confirmPassword, salt);
 
     await newUser.save();
-
+    console.log(newUser);
     res.json(newUser);
   } catch (error) {
     next(error);

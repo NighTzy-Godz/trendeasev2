@@ -29,7 +29,12 @@ export const addOrder = async (
     const currUser = await User.findById(currUserId);
     if (!currUser) return res.status(404).send("Current User cannot be found");
 
-    if (!currUser.address && shippingAddress) {
+    const { street, baranggay, houseNumber, province, municipality } =
+      currUser.address || {};
+    const insufficientAddress =
+      !street || !baranggay || !houseNumber || !province || !municipality;
+
+    if (insufficientAddress && shippingAddress) {
       currUser.address = shippingAddress;
       await currUser.save();
     }
