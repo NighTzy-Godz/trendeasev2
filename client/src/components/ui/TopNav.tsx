@@ -23,15 +23,10 @@ function TopNav({ token }: TopNavProps) {
   const dispatch = useDispatch();
   const url = useLocation();
   const isCheckoutRoute = url.pathname.includes("checkout");
-
   const { data: userCart } = useGetUserCartQuery("");
-
   const navClassName = `font-kanit text-lg text-textColor hover:text-mainColor`;
-
   const currUser = useSelector((state: RootState) => state.auth.decodedUser);
-
   const [navToggle, setNavToggle] = useState(false);
-
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {

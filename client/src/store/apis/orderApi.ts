@@ -20,6 +20,14 @@ const orderApi = createApi({
   tagTypes: ["CartItem"],
   endpoints(builder) {
     return {
+      getMyOrders: builder.query({
+        query: () => {
+          return {
+            url: "/myOrders",
+          };
+        },
+      }),
+
       addOrder: builder.mutation({
         invalidatesTags: ["CartItem"],
         query: (order: AddOrderData) => {
@@ -34,6 +42,6 @@ const orderApi = createApi({
   },
 });
 
-export const { useAddOrderMutation } = orderApi;
+export const { useAddOrderMutation, useGetMyOrdersQuery } = orderApi;
 
 export { orderApi };
