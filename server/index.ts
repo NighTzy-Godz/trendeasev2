@@ -6,6 +6,7 @@ import userRoutes from "./routes/userRoutes";
 import storeRoutes from "./routes/storeRoutes";
 import productRoutes from "./routes/productRoutes";
 import cartRoutes from "./routes/cartRoutes";
+import orderRoutes from "./routes/orderRoutes";
 
 const PORT = 8080;
 const app = express();
@@ -19,6 +20,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/store", storeRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/order", orderRoutes);
 
 const server = app.listen(PORT, () => console.log("Connected on PORT ", PORT));
 export default server;

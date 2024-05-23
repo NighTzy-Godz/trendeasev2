@@ -1,10 +1,18 @@
 import { number } from "joi";
 import mongoose, { Schema, Document } from "mongoose";
+import { PaymentMethod } from "../interface/orderInterface";
 const DB_URL = "mongodb://localhost:27017/trendease_v2";
 mongoose
   .connect(DB_URL)
   .then(() => console.log("Connected to the database - Order"))
   .catch((err) => console.log("Error on Order - ", err));
+
+export interface OrderItem {
+  product: mongoose.Types.ObjectId;
+  quantity: number;
+  price: number;
+  productOwner: mongoose.Types.ObjectId;
+}
 
 interface IOrder extends Document {
   buyer: mongoose.Types.ObjectId;
@@ -14,7 +22,7 @@ interface IOrder extends Document {
     price: number;
     productOwner: mongoose.Types.ObjectId;
   };
-  paymentMethod: string;
+  paymentMethod: PaymentMethod;
   shippingAddress: {
     houseNumber: string;
     street: string;
@@ -47,50 +55,52 @@ const orderSchema: Schema<IOrder> = new Schema<IOrder>({
     },
     productOwner: {
       type: Schema.Types.ObjectId,
-      ref: " User",
+      ref: " Store",
     },
-    paymentMethod: {
+  },
+
+  paymentMethod: {
+    type: String,
+    enum: Object.values(PaymentMethod),
+    required: true,
+  },
+  shippingAddress: {
+    houseNumber: {
       type: String,
       required: true,
     },
-    shippingAddress: {
-      houseNumber: {
-        type: String,
-        required: true,
-      },
-      street: {
-        type: String,
-        required: true,
-      },
-      province: {
-        type: String,
-        required: true,
-      },
-      municipality: {
-        type: String,
-        required: true,
-      },
-      baranggay: {
-        type: String,
-        required: true,
-      },
-    },
-    subTotal: {
-      type: Number,
+    street: {
+      type: String,
       required: true,
     },
-    shippingFee: {
-      type: Number,
+    province: {
+      type: String,
       required: true,
     },
-    totalAmount: {
-      type: Number,
+    municipality: {
+      type: String,
       required: true,
     },
-    tax: {
-      type: Number,
+    baranggay: {
+      type: String,
       required: true,
     },
+  },
+  subTotal: {
+    type: Number,
+    required: true,
+  },
+  shippingFee: {
+    type: Number,
+    required: true,
+  },
+  totalAmount: {
+    type: Number,
+    required: true,
+  },
+  tax: {
+    type: Number,
+    required: true,
   },
 });
 

@@ -123,7 +123,7 @@ export const updateUser = async (
       return res.status(409).send("User with this contact already exist");
 
     currUser.set({ firstName, lastName, email, contact });
-    if (address) currUser.address = address;
+    // if (address) currUser.address = address;
 
     await currUser.save();
 

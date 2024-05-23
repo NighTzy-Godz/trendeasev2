@@ -4,8 +4,8 @@ const DB_URL = "mongodb://localhost:27017/trendease_v2";
 
 mongoose
   .connect(DB_URL)
-  .then(() => console.log("Connected to the Database - Product"))
-  .catch((err) => console.log("Error on Product ", err));
+  .then(() => console.log("Connected to the Database - Store"))
+  .catch((err) => console.log("Error on Store ", err));
 
 interface IStoreModel extends Document {
   pfp: string;

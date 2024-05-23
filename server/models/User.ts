@@ -14,7 +14,13 @@ interface IUserModel extends Document {
   contact: string;
   password: string;
   dateOfBirth?: Date;
-  address: string;
+  address: {
+    houseNumber: string;
+    street: string;
+    province: string;
+    municipality: string;
+    barangay: string;
+  };
   profilePicture: string;
 
   store?: Schema.Types.ObjectId;
@@ -43,8 +49,26 @@ const userSchema: Schema<IUserModel> = new Schema(
       type: Date,
     },
     address: {
-      type: String,
-      default: "",
+      houseNumber: {
+        type: String,
+        default: "",
+      },
+      street: {
+        type: String,
+        default: "",
+      },
+      province: {
+        type: String,
+        default: "",
+      },
+      municipality: {
+        type: String,
+        default: "",
+      },
+      baranggay: {
+        type: String,
+        default: "",
+      },
     },
 
     profilePicture: {
