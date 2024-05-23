@@ -20,6 +20,7 @@ import ProductDetails from "./pages/products/ProductDetails";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./assets/css/img_slider.css";
+import Checkout from "./pages/static/Checkout";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -42,7 +43,7 @@ function App() {
           <Route index element={<Home />} />
 
           <Route path="/allProducts" element={<AllProducts />} />
-
+          <Route path="/checkout" element={<Checkout />} />
           <Route path="/user/profile" element={<UserProfile />} />
 
           <Route path="/product/:productId" element={<ProductDetails />} />

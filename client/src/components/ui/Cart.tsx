@@ -10,7 +10,8 @@ import { setShowUserCart } from "../../store/slices/ui";
 import Button, { btnVariants } from "../common/Button";
 import formatCurrency from "../../utils/formatCurrency";
 import calculateSubtotal from "../../utils/calculateSubtotal";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import subTotals from "../../utils/subtotals";
 
 interface CartProps {
   isShow: boolean;
@@ -20,6 +21,7 @@ interface CartProps {
 function Cart({ isShow, onCartClose }: CartProps) {
   const { data } = useGetUserCartQuery("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const cartRef = useRef<HTMLDivElement>(null);
   const userCart = data as ICart[];
 
@@ -53,17 +55,31 @@ function Cart({ isShow, onCartClose }: CartProps) {
     });
   };
 
-  const subTotals = (): string[] => {
-    if (userCart) {
-      const totalSub = userCart.map((cart) => {
-        const numTotal = parseFloat(cart.item.price) * cart.quantity;
-        return numTotal.toString();
-      });
-      return totalSub;
-    }
-    return [];
-  };
+  const handleCheckout = () => {
+    const existingCheckoutItems = localStorage.getItem("checkoutItemsConfig");
+    if (existingCheckoutItems) localStorage.removeItem("checkoutItemsConfig");
 
+    const checkoutItems = userCart?.map((item) => {
+      const checkoutItem = {
+        product: item.item._id,
+        quantity: item.quantity,
+        price: item.item.price,
+        productOwner: item.item.store,
+        img: item.item.images[0],
+        productName: item.item.productName,
+      };
+      return checkoutItem;
+    });
+
+    const checkoutItemsConfig = { clearCart: true, items: checkoutItems };
+
+    localStorage.setItem(
+      "checkoutItemsConfig",
+      JSON.stringify(checkoutItemsConfig)
+    );
+    dispatch(setShowUserCart(false));
+    return navigate("/checkout");
+  };
   return (
     <React.Fragment>
       {isShow && <div className="w-dvw top-0 h-dvh fixed bg-black/50 " />}{" "}
@@ -91,7 +107,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
                 Subtotal
               </h3>
               <p className="font-kanit text-xl text-mainColor">
-                {formatCurrency(calculateSubtotal(subTotals()))}
+                {formatCurrency(calculateSubtotal(subTotals(userCart)))}
               </p>
             </div>
             <p className="font-kanit leading-none text-sm text-bgColor">
@@ -99,12 +115,12 @@ function Cart({ isShow, onCartClose }: CartProps) {
             </p>
 
             <div className="mt-3">
-              <Link
-                to="/checkout"
+              <Button
                 className={btnVariants({ variant: "default" })}
+                onClick={handleCheckout}
               >
                 Checkout
-              </Link>
+              </Button>
             </div>
           </div>
         </div>

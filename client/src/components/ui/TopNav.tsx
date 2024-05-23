@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoStorefront } from "react-icons/io5";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import { IoSearch } from "react-icons/io5";
 
 import { FaRegHeart } from "react-icons/fa";
@@ -20,6 +20,8 @@ interface TopNavProps {
 
 function TopNav({ token }: TopNavProps) {
   const dispatch = useDispatch();
+  const url = useLocation();
+  const isCheckoutRoute = url.pathname.includes("checkout");
   const { data: userCart } = useGetUserCartQuery("");
   const navClassName = `font-kanit text-lg text-textColor hover:text-mainColor`;
 
@@ -52,6 +54,7 @@ function TopNav({ token }: TopNavProps) {
   }, [windowWidth]);
 
   const handleCartClick = () => {
+    if (isCheckoutRoute) return;
     if (!currUser) {
       toast.error("Please Login First", { toastId: "Cart Login" });
       return dispatch(setShowLoginModal(true));
@@ -85,7 +88,9 @@ function TopNav({ token }: TopNavProps) {
                 >
                   {" "}
                   <FaCartShopping
-                    className="w-7 h-7 text-textColor cursor-pointer font-semibold"
+                    className={`w-7 h-7 text-textColor   font-semibold ${
+                      isCheckoutRoute ? "cursor-not-allowed" : "cursor-pointer"
+                    }`}
                     onClick={handleCartClick}
                   />
                 </div>

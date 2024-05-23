@@ -15,7 +15,7 @@ function CartCounter({
   return (
     <div className="w-28 h-9 text-center relative border border-zinc-500 rounded-full">
       <button
-        className="absolute left-0 pl-3 leading-10 block h-8"
+        className="absolute left-0 pl-3 leading-10 block h-8 text-bgColor"
         onClick={onDecreaseQty}
       >
         <FiMinus />
@@ -29,7 +29,7 @@ function CartCounter({
         className="text-center h-8 bg-inherit font-kanit text-bgColor"
       />
       <button
-        className="absolute right-0 pr-3 leading-10 h-8"
+        className="absolute right-0 pr-3 leading-10 h-8 text-bgColor"
         onClick={onIncreaseQty}
       >
         <MdAdd className="" />

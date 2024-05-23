@@ -6,6 +6,7 @@ import authReducer from "../slices/auth";
 import userReducer from "../slices/user";
 import { storeApi } from "../apis/storeApi";
 import { cartApi } from "../apis/cartApi";
+import { orderApi } from "../apis/orderApi";
 
 export default combineReducers({
   ui: uiReducer,
@@ -15,4 +16,5 @@ export default combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [storeApi.reducerPath]: storeApi.reducer,
   [cartApi.reducerPath]: cartApi.reducer,
+  [orderApi.reducerPath]: orderApi.reducer,
 });

@@ -19,9 +19,10 @@ const btnVariants = cva(
         sub: "bg-textColor ",
       },
       size: {
+        lg: "h-12 py-3 px-4 text-lg",
         default: "h-10 py-2 px-4",
-        sm: "h-8 px-2 py-1",
-        xs: "h-6 px-1 py-1",
+        sm: "h-8 px-2 py-1 text-sm",
+        xs: "h-6 px-1 py-1 text-xs",
       },
     },
     defaultVariants: {
