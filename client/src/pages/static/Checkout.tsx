@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   AddOrderData,
@@ -8,7 +8,7 @@ import {
   PreCheckoutItem,
 } from "../../interfaces/orderInteraces";
 import Input from "../../components/common/Input";
-import paymentMethod from "../../data/paymentMethod";
+import paymentMethod, { IPaymentMethod } from "../../data/paymentMethod";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import formatCurrency from "../../utils/formatCurrency";
@@ -22,6 +22,9 @@ import { useAddOrderMutation } from "../../store/apis/orderApi";
 import { renderError } from "../../utils/utils";
 import { useGetUserDataQuery } from "../../store/apis/userApi";
 import { useGetUserCartQuery } from "../../store/apis/cartApi";
+import CheckoutItemCard from "../../components/cards/CheckoutItemCard";
+import PaymentMethodCard from "../../components/cards/PaymentMethodCard";
+import CheckoutTotalPriceBox from "../../components/ui/CheckoutTotalPriceBox";
 
 function Checkout() {
   const navigate = useNavigate();
@@ -37,9 +40,10 @@ function Checkout() {
       const preCheckoutItemsConfig = localStorage.getItem(
         "checkoutItemsConfig"
       );
+
       if (!preCheckoutItemsConfig) {
-        toast.error("There is no Checkout Items");
-        <Navigate to="/" />;
+        toast.error("There is no Checkout Items", { toastId: "No Checkout" });
+        navigate("/");
       } else {
         const preItems: CheckoutItemConfig = JSON.parse(
           preCheckoutItemsConfig as string
@@ -63,67 +67,25 @@ function Checkout() {
     }
     if (result.isSuccess) {
       toast.success("Successfully checked out the items");
-      cartRefetch();
+      if (clearCart) cartRefetch();
+
       navigate("/user/profile");
     }
   }, [result]);
 
   const renderPaymentMethods = paymentMethod.map((item) => {
     return (
-      <div
-        className={`w-72 border cursor-pointer bg- ${
-          payMethod.id === item.id
-            ? "bg-mainColor border-mainColor"
-            : "border-textColor"
-        }  rounded-md py-3 px-5`}
+      <PaymentMethodCard
         key={item.id}
-        onClick={() => setPayMethod(item)}
-      >
-        <div className="flex items-center justify-between mb-2">
-          <h1 className="font-kanit text-textColor text-xl">{item.name}</h1>
-        </div>
-        <p className="font-kanit text-xs text-textColor">{item.definition}</p>
-      </div>
+        currPaymentMethod={payMethod}
+        data={item}
+        onPaymentMethodClick={(data: IPaymentMethod) => setPayMethod(data)}
+      />
     );
   });
 
-  const renderCheckoutItems = checkoutItems.map((item) => {
-    const preSubTotal = parseInt(item.price) * item.quantity;
-    return (
-      <div className="flex justify-between mb-5">
-        <div className="flex  items-center gap-x-4">
-          <div className="h-24 w-24">
-            <img
-              src={item.img}
-              className="h-full rounded-md w-full object-cover"
-              alt=""
-            />
-          </div>
-          <div className="">
-            <div className="mb-3">
-              {" "}
-              <h4 className="font-kanit text-mainColor text-xl leading-none">
-                {item.productName}
-              </h4>
-              <p className="font-kanit text-textColor text-lg">
-                {" "}
-                {formatCurrency(item.price)}
-              </p>
-            </div>{" "}
-            <div className="">
-              <p className="font-kanit text-lg text-textColor">
-                x{item.quantity}
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="">
-          <p className="font-kanit text-mainColor text-lg">
-            {formatCurrency(preSubTotal.toString())}
-          </p>
-        </div>
-      </div>
-    );
+  const renderCheckoutItems = checkoutItems.map((item, index) => {
+    return <CheckoutItemCard data={item} key={index} />;
   });
 
   const subTotals = checkoutItems.map((item) => {
@@ -133,25 +95,28 @@ function Checkout() {
   const totalTax = calculateTax(calculateSubtotal(subTotals));
   const subTotal = calculateSubtotal(subTotals);
 
-  const handleCheckoutSubmit = async (data: AddOrderData) => {
-    const items = checkoutItems.map((item) => {
-      const body: OrderItem = {
-        product: item.product,
-        price: parseInt(item.price),
-        quantity: item.quantity,
-        productOwner: item.productOwner,
+  const handleCheckoutSubmit = useCallback(
+    (data: AddOrderData) => {
+      const items = checkoutItems.map((item) => {
+        const body: OrderItem = {
+          product: item.product,
+          price: parseInt(item.price),
+          quantity: item.quantity,
+          productOwner: item.productOwner,
+        };
+        return body;
+      });
+      const reqBody: AddOrderData = {
+        shippingAddress: data.shippingAddress,
+        checkoutItems: items,
+        paymentMethod: payMethod.value as PaymentMethod,
+        clearCart,
       };
-      return body;
-    });
-    const reqBody: AddOrderData = {
-      shippingAddress: data.shippingAddress,
-      checkoutItems: items,
-      paymentMethod: payMethod.value as PaymentMethod,
-      clearCart,
-    };
 
-    await addOrder(reqBody).unwrap();
-  };
+      addOrder(reqBody);
+    },
+    [addOrder, checkoutItems, clearCart, payMethod]
+  );
 
   return (
     <div className="py-16 bg-bgColor">
@@ -282,48 +247,10 @@ function Checkout() {
                   </h1>
                 </div>
                 <div className="mb-12"> {renderCheckoutItems} </div>
-
-                <div className="w-full border rounded-md  border-textColor p-3">
-                  <div className="mb-5">
-                    <h1 className=" leading-snug text-2xl text-mainColor font-kanit">
-                      Payment Details
-                    </h1>
-                    <p className="text-sm font-kanit text-textColor">
-                      Review all the total with subtotal, tax and shipping fee
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="font-kanit text-textColor">
-                      Merchandise Total:
-                    </p>
-                    <p className="font-kanit text-mainColor">
-                      {/* {formatCurrency(subTotal)} */}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="font-kanit text-textColor">Shipping Fee:</p>
-                    <p className="font-kanit text-mainColor">
-                      {formatCurrency("40")}
-                    </p>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <p className="font-kanit text-textColor">Tax:</p>
-                    <p className="font-kanit text-mainColor">
-                      {formatCurrency(totalTax)}
-                    </p>
-                  </div>
-
-                  <div className=" mt-2 mb-4 w-full h-[2px] bg-mainColor"></div>
-
-                  <div className="flex items-center justify-between">
-                    <h3 className="font-kanit text-textColor text-2xl">
-                      Total Payment:
-                    </h3>
-                    <p className="font-kanit text-2xl text-mainColor">
-                      {calculateTotal(subTotal, totalTax)}
-                    </p>
-                  </div>
-                </div>
+                <CheckoutTotalPriceBox
+                  subTotal={subTotal}
+                  totalTax={totalTax}
+                />
               </div>
             </div>
           </div>

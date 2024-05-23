@@ -1,3 +1,10 @@
+export interface IPaymentMethod {
+  id: number;
+  name: string;
+  value: string;
+  definition: string;
+}
+
 const paymentMethod = [
   {
     id: 0,

@@ -59,6 +59,8 @@ function Cart({ isShow, onCartClose }: CartProps) {
     const existingCheckoutItems = localStorage.getItem("checkoutItemsConfig");
     if (existingCheckoutItems) localStorage.removeItem("checkoutItemsConfig");
 
+    if (userCart.length === 0) return;
+
     const checkoutItems = userCart?.map((item) => {
       const checkoutItem = {
         product: item.item._id,
