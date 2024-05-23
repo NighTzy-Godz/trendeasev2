@@ -11,6 +11,7 @@ function LogOut() {
     try {
       localStorage.removeItem("token");
       dispatch(setAuthToken(null));
+      dispatch({ type: "LOGOUT" });
       toast.success("Successfully Logged Out!", { toastId: "Logout" });
       navigate("/");
     } catch (error) {}

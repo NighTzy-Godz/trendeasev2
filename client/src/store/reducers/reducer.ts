@@ -1,4 +1,5 @@
-import { combineReducers } from "@reduxjs/toolkit";
+// rootReducer.ts
+import { Action, combineReducers } from "@reduxjs/toolkit";
 import { productsApi } from "../apis/productsApi";
 import uiReducer from "../slices/ui";
 import { userApi } from "../apis/userApi";
@@ -8,7 +9,7 @@ import { storeApi } from "../apis/storeApi";
 import { cartApi } from "../apis/cartApi";
 import { orderApi } from "../apis/orderApi";
 
-export default combineReducers({
+const appReducer = combineReducers({
   ui: uiReducer,
   auth: authReducer,
   currUser: userReducer,
@@ -18,3 +19,17 @@ export default combineReducers({
   [cartApi.reducerPath]: cartApi.reducer,
   [orderApi.reducerPath]: orderApi.reducer,
 });
+
+type RootState = ReturnType<typeof appReducer>;
+
+const rootReducer = (
+  state: RootState | undefined,
+  action: Action
+): RootState => {
+  if (action.type === "LOGOUT") {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;
