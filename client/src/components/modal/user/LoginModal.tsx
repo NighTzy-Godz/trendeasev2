@@ -41,6 +41,7 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
 
       toast.success("Successfully Logged In!");
       dispatch(setAuthToken(data));
+      dispatch(setShowLoginModal(false));
       reset();
 
       if (redirectRoute) {
@@ -58,7 +59,6 @@ function LoginModal({ isShow, onModalClose }: LoginModalProps) {
   };
 
   const handleLoginSubmit = (data: LoginData) => {
-    dispatch(setShowLoginModal(false));
     loginUser(data);
   };
 
