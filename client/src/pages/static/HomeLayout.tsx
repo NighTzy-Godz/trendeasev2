@@ -56,7 +56,9 @@ function HomeLayout() {
   return (
     <React.Fragment>
       <TopNav token={token} />
+
       <Cart isShow={showUserCart} onCartClose={handleCloseCart} />
+
       <LoginModal
         isShow={showLoginModal}
         onModalClose={handleCloseLoginModal}

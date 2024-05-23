@@ -13,6 +13,7 @@ import { RootState } from "../../store/store";
 import { FaRegUserCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
 import { useGetUserCartQuery } from "../../store/apis/cartApi";
+import { ICart } from "../../interfaces/cartInterfaces";
 
 interface TopNavProps {
   token: string | null;
@@ -22,7 +23,9 @@ function TopNav({ token }: TopNavProps) {
   const dispatch = useDispatch();
   const url = useLocation();
   const isCheckoutRoute = url.pathname.includes("checkout");
+
   const { data: userCart } = useGetUserCartQuery("");
+
   const navClassName = `font-kanit text-lg text-textColor hover:text-mainColor`;
 
   const currUser = useSelector((state: RootState) => state.auth.decodedUser);
@@ -82,7 +85,8 @@ function TopNav({ token }: TopNavProps) {
                 <div
                   data-cart-count={userCart?.length}
                   className={`${
-                    userCart?.length !== 0 &&
+                    userCart &&
+                    userCart.length !== 0 &&
                     "font-kanit after:h-5 after:w-5 after:bg-red-500 after:flex  after:items-center after:justify-center  after:content-[attr(data-cart-count)] after:absolute after:-top-3 after:-right-3 after:rounded-full text-sm text-white"
                   }`}
                 >
