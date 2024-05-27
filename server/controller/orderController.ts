@@ -13,12 +13,14 @@ export const getMyOrders = async (
 ) => {
   try {
     const currUserId = req.user?._id;
+    const { status } = req.params;
     if (!currUserId)
       return res.status(401).send("You are not authorized by this time");
 
-    const currUserOrders = await Order.find({ buyer: currUserId })
-      .populate("item.productOwner item.product")
-      .populate("");
+    const currUserOrders = await Order.find({
+      buyer: currUserId,
+      status: "PENDING",
+    }).populate("item.productOwner item.product");
 
     res.json(currUserOrders);
   } catch (error) {
@@ -97,6 +99,7 @@ export const addOrder = async (
         totalAmount,
         paymentMethod,
         shippingFee: SHIPPING_FEE,
+        status: "PENDING",
       });
 
       await order.save();

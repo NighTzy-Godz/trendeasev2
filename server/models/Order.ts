@@ -14,8 +14,16 @@ export interface OrderItem {
   productOwner: mongoose.Types.ObjectId;
 }
 
+export enum OrderStatus {
+  PENDING = "PENDING",
+  DELIVERING = "DELIVERING",
+  RECIEVED = "RECIEVED",
+  CANCELLED = "CANCELLED",
+}
+
 interface IOrder extends Document {
   buyer: mongoose.Types.ObjectId;
+  status: OrderStatus;
   item: {
     product: mongoose.Types.ObjectId;
     quantity: number;
@@ -40,6 +48,13 @@ const orderSchema: Schema<IOrder> = new Schema<IOrder>({
   buyer: {
     type: Schema.Types.ObjectId,
     ref: "User",
+  },
+
+  status: {
+    type: String,
+    required: true,
+    default: "PENDING" as OrderStatus,
+    enum: Object.values(OrderStatus),
   },
   item: {
     product: {
