@@ -1,9 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { IoClose } from "react-icons/io5";
-
 import { useGetUserCartQuery } from "../../store/apis/cartApi";
 import { ICart } from "../../interfaces/cartInterfaces";
-
 import CartCard from "../cards/CartCard";
 import { useDispatch } from "react-redux";
 import { setShowUserCart } from "../../store/slices/ui";
@@ -33,7 +31,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
     };
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [cartRef]);
+  }, [cartRef, dispatch]);
 
   useEffect(() => {
     if (isShow) {
@@ -82,9 +80,10 @@ function Cart({ isShow, onCartClose }: CartProps) {
     dispatch(setShowUserCart(false));
     return navigate("/checkout");
   };
+
   return (
     <React.Fragment>
-      {isShow && <div className="w-dvw top-0 h-dvh fixed bg-black/50 " />}{" "}
+      {isShow && <div className="w-dvw top-0 h-dvh fixed bg-black/50 " />}
       <div
         ref={cartRef}
         className={`transition duration-700 ease-in-out  ${
@@ -102,7 +101,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
 
           {renderCartItems()}
         </div>
-        <div className=" h-40 w-full inset-x-0 bottom-0 z-50 ">
+        <div className="h-40 w-full inset-x-0 bottom-0 z-50">
           <div className="px-5 py-3">
             <div className="mb-2 flex items-center justify-between">
               <h3 className="font-kanit font-semibold text-bgColor text-xl">
@@ -126,7 +125,7 @@ function Cart({ isShow, onCartClose }: CartProps) {
             </div>
           </div>
         </div>
-      </div>{" "}
+      </div>
     </React.Fragment>
   );
 }

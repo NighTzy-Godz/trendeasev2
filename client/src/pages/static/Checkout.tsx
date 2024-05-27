@@ -18,7 +18,10 @@ import calculateTax from "../../utils/calculateTax";
 
 import Button from "../../components/common/Button";
 import InputError from "../../components/common/InputError";
-import { useAddOrderMutation } from "../../store/apis/orderApi";
+import {
+  useAddOrderMutation,
+  useGetMyOrdersQuery,
+} from "../../store/apis/orderApi";
 import { renderError } from "../../utils/utils";
 import { useGetUserDataQuery } from "../../store/apis/userApi";
 import { useGetUserCartQuery } from "../../store/apis/cartApi";
@@ -30,6 +33,7 @@ function Checkout() {
   const navigate = useNavigate();
   const [addOrder, result] = useAddOrderMutation();
   const { refetch: cartRefetch } = useGetUserCartQuery("");
+  const { refetch: orderRefetch } = useGetMyOrdersQuery("");
   const { data: userData } = useGetUserDataQuery("");
   const [payMethod, setPayMethod] = useState(paymentMethod[0]);
   const [checkoutItems, setCheckoutItems] = useState<PreCheckoutItem[]>([]);
@@ -81,7 +85,8 @@ function Checkout() {
     if (result.isSuccess) {
       toast.success("Successfully checked out the items");
       if (clearCart) cartRefetch();
-
+      orderRefetch();
+      localStorage.removeItem("checkoutItemsConfig");
       navigate("/user/myOrders");
     }
   }, [result]);
