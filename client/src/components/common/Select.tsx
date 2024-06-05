@@ -14,6 +14,7 @@ interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
 const Select = forwardRef<HTMLSelectElement, SelectProps>(
   ({ className, data, headerInstruction, ...props }: SelectProps, ref) => {
     const renderOptions = data.map((item) => {
+      if (item.id === -1) return;
       return (
         <option value={item.value} key={item.id}>
           {item.name}

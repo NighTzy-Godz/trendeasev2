@@ -8,7 +8,7 @@ interface UIState {
 }
 
 const initialState: UIState = {
-  colorTheme: "dark",
+  colorTheme: "",
   showLoginModal: false,
   showRegisterUserModal: false,
   showUserCart: false,

@@ -16,7 +16,7 @@ const btnVariants = cva(
           "bg-mainColor text-textColor hover:bg-mainColorHover focus:ring-textColor",
         success: "bg-green-600 text-white hover:bg-green-700",
         error: "bg-red-500 text-white hover:bg-red-600",
-        sub: "bg-textColor ",
+        sub: "bg-textColor text-mainColor",
       },
       size: {
         lg: "h-12 py-3 px-4 text-lg",

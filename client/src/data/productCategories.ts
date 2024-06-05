@@ -1,5 +1,10 @@
 const productCategories = [
   {
+    id: -1,
+    name: "All Categories",
+    value: "",
+  },
+  {
     id: 0,
     name: "Electronics",
     value: "electronics",

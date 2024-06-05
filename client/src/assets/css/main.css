@@ -21,6 +21,11 @@
   @apply text-mainColor;
 }
 
+html,
+#root {
+  height: 100%;
+}
+
 @layer base {
   :root {
     --bg-color: 255, 255, 255;

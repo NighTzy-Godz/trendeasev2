@@ -10,31 +10,21 @@ import Button from "../../components/common/Button";
 function AllProducts() {
   const [searchParams, setSearchParams] = useSearchParams({
     page: "1",
-    productFilter: "electronics",
+    productFilter: "",
   });
 
   const page = searchParams.get("page");
   const productFilter = searchParams.get("productFilter");
 
-  const productParams = {
+  const productQuery = {
     page,
     productFilter,
   };
 
-  const { refetch, data } = useGetAllProductsQuery("");
-
+  const { data: responseData } = useGetAllProductsQuery(productQuery);
+  const { data, pageNumber, totalCount } = responseData || {};
   const products = data as IProduct[];
-
-  const renderProducts = () => {
-    if (products?.length === 0) return <h1>No Products Here</h1>;
-    return products?.map((item) => {
-      return (
-        <React.Fragment key={item._id}>
-          <ProductCard data={item} />
-        </React.Fragment>
-      );
-    });
-  };
+  const pageCount = Math.ceil(totalCount / 8);
 
   const handlePageChange = (page: number) => {
     const realPage = page + 1;
@@ -57,10 +47,16 @@ function AllProducts() {
     );
   };
 
-  const handleApplyFilter = () => {
-    console.log(page, productFilter);
+  const renderProducts = () => {
+    if (products?.length === 0) return <h1>No Products Here</h1>;
+    return products?.map((item) => {
+      return (
+        <React.Fragment key={item._id}>
+          <ProductCard data={item} />
+        </React.Fragment>
+      );
+    });
   };
-
   const renderProductCategories = productCategories.map((category) => {
     const isActive = productFilter === category.value;
     return (
@@ -105,28 +101,27 @@ function AllProducts() {
                 Categories
               </h1>
               {renderProductCategories}
-
-              <div className="">
-                <Button onClick={handleApplyFilter}>Apply Filter</Button>
-              </div>
             </div>
           </div>
           <div className="w-4/5 ">
             <div className="grid grid-cols-4 gap-7 mb-5 pt-5">
               {renderProducts()}
             </div>
-            <ReactPaginate
-              pageCount={5}
-              activeClassName="bg-mainColor"
-              pageClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  rounded-full"
-              className="flex gap-x-2"
-              previousClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  mr-2"
-              previousLabel="<"
-              nextClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  ml-2"
-              nextLabel=">"
-              forcePage={parseInt(page as string) - 1}
-              onPageChange={({ selected: page }) => handlePageChange(page)}
-            />
+
+            {products?.length !== 0 && pageCount !== 1 && (
+              <ReactPaginate
+                pageCount={pageCount}
+                activeClassName="bg-mainColor"
+                pageClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  rounded-full"
+                className="flex gap-x-2"
+                previousClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  mr-2"
+                previousLabel="<"
+                nextClassName="font-kanit h-8 w-8 flex justify-center items-center text-textColor  ml-2"
+                nextLabel=">"
+                forcePage={parseInt(page as string) - 1}
+                onPageChange={({ selected: page }) => handlePageChange(page)}
+              />
+            )}
           </div>
         </div>
       </div>
