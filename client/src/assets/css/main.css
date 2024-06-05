@@ -21,12 +21,9 @@
   @apply text-mainColor;
 }
 
-/* html {
-  overflow-x: hidden;
+/* .paginate_container {
+  display: flex;
 } */
-
-.cart.showCart {
-}
 
 @layer base {
   :root {
