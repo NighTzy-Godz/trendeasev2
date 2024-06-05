@@ -21,10 +21,6 @@
   @apply text-mainColor;
 }
 
-/* .paginate_container {
-  display: flex;
-} */
-
 @layer base {
   :root {
     --bg-color: 255, 255, 255;

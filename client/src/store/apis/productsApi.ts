@@ -24,10 +24,11 @@ const productsApi = createApi({
       }),
 
       getAllProducts: builder.query({
-        query: () => {
+        query: (params) => {
           return {
             url: "/getAllProducts",
             method: "GET",
+            params,
           };
         },
       }),
