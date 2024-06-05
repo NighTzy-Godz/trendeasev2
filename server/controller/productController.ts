@@ -86,9 +86,28 @@ export const getAllProducts = async (
   next: NextFunction
 ) => {
   try {
-    const products = await Product.find();
+    const LIMIT = 8;
+    const { page, productFilter } = req.query;
 
-    res.json(products);
+    const pageNumber = parseInt(page as string) || 1;
+    const skip = (pageNumber - 1) * LIMIT;
+
+    const query = productFilter
+      ? { category: { $regex: new RegExp(productFilter as string, "i") } }
+      : {};
+
+    const [results, resultCount] = await Promise.all([
+      Product.find(query).limit(LIMIT).skip(skip),
+      Product.countDocuments(query),
+    ]);
+
+    const resContent = {
+      data: results,
+      totalCount: resultCount,
+      currPage: pageNumber,
+    };
+
+    res.json(resContent);
   } catch (error) {
     next(error);
   }
