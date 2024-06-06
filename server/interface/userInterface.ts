@@ -12,10 +12,16 @@ export interface LoginUser {
   password: string;
 }
 
-export interface UserProfileUpdate {
+export interface UpdateUserProfileData {
   firstName: string;
   lastName: string;
   email: string;
   contact: string;
-  address: string;
+  address: {
+    houseNumber: string;
+    street: string;
+    province: string;
+    municipality: string;
+    baranggay: string;
+  };
 }

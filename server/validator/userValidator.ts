@@ -1,5 +1,9 @@
 import Joi from "joi";
-import { LoginUser, RegisterUser } from "../interface/userInterface";
+import {
+  LoginUser,
+  RegisterUser,
+  UpdateUserProfileData,
+} from "../interface/userInterface";
 
 export const registerUserValidator = (
   data: RegisterUser
@@ -48,7 +52,7 @@ export const registerUserValidator = (
 };
 
 export const updateUserValidator = (
-  data: RegisterUser
+  data: UpdateUserProfileData
 ): Joi.ValidationResult => {
   const schema = Joi.object({
     firstName: Joi.string().required().messages({
@@ -77,17 +81,30 @@ export const updateUserValidator = (
         "string.pattern.base": "Contact should be 11 digit long",
       }),
 
-    address: Joi.string()
-      .min(10)
-      .max(400)
-      .trim()
-      .allow("")
-      .optional()
-      .messages({
-        "string.base": "Address is a type of string",
-        "string.min": "Address should have atleast 10 characters",
-        "string.max": "Address can only have 400 characters",
+    address: Joi.object({
+      houseNumber: Joi.string()
+        .optional()
+        .allow(" " || null)
+        .messages({
+          "string.base": "House Number should be a type of string",
+        }),
+      street: Joi.string().required().messages({
+        "string.required": "Street is a required field",
+        "string.base": "Street should be a type of string",
       }),
+      province: Joi.string().required().messages({
+        "string.required": "Province is a required field",
+        "string.base": "Province should be a type of string",
+      }),
+      municipality: Joi.string().required().messages({
+        "string.required": "Municipality is a required field",
+        "string.base": "Municipality should be a type of string",
+      }),
+      baranggay: Joi.string().required().messages({
+        "string.required": "Baranggay is a required field",
+        "string.base": "Baranggay should be a type of string",
+      }),
+    }).optional(),
   });
   return schema.validate(data);
 };

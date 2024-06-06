@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   LoginUser,
   RegisterUser,
-  UserProfileUpdate,
+  UpdateUserProfileData,
 } from "../interface/userInterface";
 import {
   loginUserValidator,
@@ -98,10 +98,16 @@ export const updateUser = async (
   next: NextFunction
 ) => {
   try {
-    const { firstName, lastName, email, contact, address }: UserProfileUpdate =
-      req.body;
+    const {
+      firstName,
+      lastName,
+      email,
+      contact,
+      address,
+    }: UpdateUserProfileData = req.body;
 
     const { error } = updateUserValidator(req.body);
+
     if (error) return res.status(400).send(error.details[0].message);
 
     const currUserId = req.user?._id;
@@ -123,7 +129,7 @@ export const updateUser = async (
       return res.status(409).send("User with this contact already exist");
 
     currUser.set({ firstName, lastName, email, contact });
-    // if (address) currUser.address = address;
+    if (address) currUser.address = address;
 
     await currUser.save();
 
