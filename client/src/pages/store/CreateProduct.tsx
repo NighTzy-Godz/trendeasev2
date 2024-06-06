@@ -56,7 +56,7 @@ function CreateProduct() {
           <div className="w-1/4">
             <ProfileNav />
           </div>
-          <div className="w-3/4">
+          <div className="w-3/4 ">
             <div className="w-full h-full grid place-items-center">
               <form
                 onSubmit={handleSubmit(handleCreateProductSubmit)}

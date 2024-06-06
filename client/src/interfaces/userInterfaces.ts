@@ -24,7 +24,13 @@ export interface UpdateUserProfileData {
   lastName: string;
   email: string;
   contact: string;
-  address?: string;
+  address: {
+    houseNumber: string;
+    street: string;
+    province: string;
+    municipality: string;
+    baranggay: string;
+  };
 }
 
 export interface IUser {

@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import userProfileLinks from "../../data/userProfileLinks";
 import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
+
 import storeProfileLinks from "../../data/storeProfileLinks";
+import { useGetUserDataQuery } from "../../store/apis/userApi";
 
 function ProfileNav() {
-  const currUser = useSelector((state: RootState) => state.currUser.currUser);
-  useEffect(() => {}, [currUser]);
+  const { data: currUser } = useGetUserDataQuery("");
+
   const profileNavClass = "font-kanit text-textColor text-xl  w-full ";
   const renderProfileLinks = userProfileLinks.map((item) => {
     return (
