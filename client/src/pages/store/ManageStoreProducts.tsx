@@ -10,6 +10,7 @@ import ProductList from "../../components/containers/ProductList";
 
 function ManageStoreProducts() {
   const user = useSelector((state: RootState) => state.auth.decodedUser);
+
   const { data, isLoading } = useGetStoreProductsQuery(user);
 
   const storeProducts = data as IProduct[];

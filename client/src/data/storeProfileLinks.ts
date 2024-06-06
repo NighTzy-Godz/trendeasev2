@@ -1,5 +1,5 @@
 const storeProfileLinks = [
-  { id: 1, name: "My Store", path: "/store/storeProfile" },
+  { id: 1, name: "My Store", path: "/store/myStore" },
   {
     id: 0,
     name: "Manage Orders",

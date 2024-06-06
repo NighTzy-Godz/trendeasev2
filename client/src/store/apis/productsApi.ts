@@ -1,9 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { RootState } from "../store";
 
 const productsApi = createApi({
   reducerPath: "products",
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/product",
+    prepareHeaders: (headers, { getState }) => {
+      const token =
+        localStorage.getItem("token") ||
+        (getState() as RootState).auth.authToken;
+
+      if (token) headers.set("x-auth-token", token);
+      return headers;
+    },
   }),
 
   tagTypes: ["Product", "StoreProduct"],
@@ -16,9 +25,6 @@ const productsApi = createApi({
           return {
             url: `/getStoreProducts/${user?.store}`,
             method: "GET",
-            headers: {
-              "x-auth-token": localStorage.getItem("token") || "",
-            },
           };
         },
       }),

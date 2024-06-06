@@ -25,6 +25,7 @@ import UserOrders from "./pages/user/UserOrders";
 import UserProfileLayout from "./components/user/UserProfileLayout";
 import RedirectLastPage from "./components/common/RedirectLastPage";
 import UserChangePassword from "./pages/user/UserChangePassword";
+import MyStore from "./pages/store/MyStore";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -58,8 +59,13 @@ function App() {
 
           <Route path="/product/:productId" element={<ProductDetails />} />
 
-          <Route path="/store/createStore" element={<CreateStore />} />
-          <Route path="/store/createProduct" element={<CreateProduct />} />
+          <Route path="/store" element={<UserProfileLayout />}>
+            <Route index element={<RedirectLastPage />} />
+            <Route path="myStore" element={<MyStore />} />
+            <Route path="createStore" element={<CreateStore />} />
+            <Route path="createProduct" element={<CreateProduct />} />
+          </Route>
+
           <Route
             path="/store/manageProducts"
             element={<ManageStoreProducts />}
