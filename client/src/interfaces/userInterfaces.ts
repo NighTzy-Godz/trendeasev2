@@ -19,6 +19,12 @@ export interface DecodedUser {
   _id: string;
 }
 
+export interface UpdateUserPasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
 export interface UpdateUserProfileData {
   firstName: string;
   lastName: string;

@@ -50,14 +50,14 @@ function UserProfile() {
   };
 
   return (
-    <div className="w-full h-full grid place-items-center ">
+    <div className="  w-full h-full grid place-items-center ">
       <div className="mb-20 text-center">
         <h1 className="font-kanit text-mainColor text-3xl">My Profile</h1>
         <p className="font-kanit text-textColor ">
           Protect and Manage your account
         </p>
       </div>
-      <form action="" onSubmit={handleSubmit(handleUpdateUserSubmit)}>
+      <form className="w-1/2" onSubmit={handleSubmit(handleUpdateUserSubmit)}>
         {" "}
         <div className="mb-8  flex flex-col">
           <InputLabel label="First Name" className="mb-1" />

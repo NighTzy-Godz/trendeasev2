@@ -24,6 +24,7 @@ import Checkout from "./pages/static/Checkout";
 import UserOrders from "./pages/user/UserOrders";
 import UserProfileLayout from "./components/user/UserProfileLayout";
 import RedirectLastPage from "./components/common/RedirectLastPage";
+import UserChangePassword from "./pages/user/UserChangePassword";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -52,6 +53,7 @@ function App() {
             <Route index element={<RedirectLastPage />} />
             <Route path="profile" element={<UserProfile />} />
             <Route path="myOrders" element={<UserOrders />} />
+            <Route path="changePassword" element={<UserChangePassword />} />
           </Route>
 
           <Route path="/product/:productId" element={<ProductDetails />} />
