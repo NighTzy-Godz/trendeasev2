@@ -9,10 +9,11 @@ mongoose
 
 interface IStoreModel extends Document {
   pfp: string;
-
   storeName: string;
   description: string;
   owner: Schema.Types.ObjectId;
+  email: string;
+  phone: string;
   products: Schema.Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;
@@ -29,6 +30,17 @@ const storeSchema: Schema<IStoreModel> = new Schema(
       type: String,
       required: true,
     },
+
+    email: {
+      type: String,
+      required: true,
+    },
+
+    phone: {
+      type: String,
+      required: true,
+    },
+
     description: {
       type: String,
       default: "",

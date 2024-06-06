@@ -14,7 +14,7 @@ export const createStore = async (
   const session = await mongoose.startSession();
   session.startTransaction();
   try {
-    const { storeName, description }: CreateStore = req.body;
+    const { storeName, description, email, phone }: CreateStore = req.body;
     const currUserId = req.user?._id;
 
     const { error } = createStoreValidator(req.body);
@@ -25,10 +25,22 @@ export const createStore = async (
     if (user?.store)
       return res.status(409).send("You already have an existing store");
 
+    const storeFields = ["email", "phone"];
+    for (const field of storeFields) {
+      const existingStore = await Store.findOne({
+        [field]: req.body[field],
+      }).select("_id");
+      if (existingStore) {
+        return res.status(409).send(`Store with this ${field} already exists`);
+      }
+    }
+
     const store = new Store({
       storeName,
       description,
       owner: currUserId,
+      email,
+      phone,
     });
 
     if (user) {
