@@ -2,8 +2,37 @@ import Joi from "joi";
 import {
   LoginUser,
   RegisterUser,
+  UpdateUserPasswordData,
   UpdateUserProfileData,
 } from "../interface/userInterface";
+
+export const updateUserPasswordValidator = (
+  data: UpdateUserPasswordData
+): Joi.ValidationResult => {
+  const schema = Joi.object({
+    currentPassword: Joi.string().required().messages({
+      "string.any": "Current Password cannot be empty",
+      "string.required": "Current Password should be a type of string",
+      "string.base": "Current Password should be a type of string",
+    }),
+
+    newPassword: Joi.string().min(7).required().messages({
+      "string.any": "New Password cannot be empty",
+      "string.required": "New Password should be a type of string",
+      "string.base": "New Password should be a type of string",
+      "string.min": "New Password should be atleast 7 characters",
+    }),
+
+    confirmPassword: Joi.string().min(7).required().messages({
+      "string.any": "Confirm Password cannot be empty",
+      "string.required": "Confirm Password should be a type of string",
+      "string.base": "Confirm Password should be a type of string",
+      "string.min": "Confirm Password should be atleast 7 characters",
+    }),
+  });
+
+  return schema.validate(data);
+};
 
 export const registerUserValidator = (
   data: RegisterUser

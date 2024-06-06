@@ -7,6 +7,7 @@ import {
 import {
   loginUserValidator,
   registerUserValidator,
+  updateUserPasswordValidator,
   updateUserValidator,
 } from "../validator/userValidator";
 import bcrypt from "bcrypt";
@@ -134,6 +135,49 @@ export const updateUser = async (
     await currUser.save();
 
     res.json(currUser);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const updateUserPassword = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { currentPassword, newPassword, confirmPassword } = req.body;
+
+    const { error } = updateUserPasswordValidator(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+
+    if (newPassword !== confirmPassword)
+      return res
+        .status(400)
+        .send("New Password and Confirm Password did not match");
+
+    const currUserId = req.user?._id;
+    if (!currUserId)
+      return res
+        .status(401)
+        .send("Please login first. You are not authenticated yet");
+
+    const user = await User.findOne({ _id: currUserId }).select("password");
+    if (!user) return res.status(404).send("User did not found");
+
+    const isValidPassword = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+    if (!isValidPassword)
+      return res.status(400).send("Credentials did not match");
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(confirmPassword, salt);
+
+    await user.save();
+
+    res.json(user);
   } catch (error) {
     next(error);
   }

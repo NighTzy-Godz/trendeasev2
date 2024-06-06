@@ -25,3 +25,9 @@ export interface UpdateUserProfileData {
     baranggay: string;
   };
 }
+
+export interface UpdateUserPasswordData {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
