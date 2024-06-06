@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import HomeLayout from "./pages/static/HomeLayout";
 import Home from "./pages/static/Home";
 import { useEffect } from "react";
@@ -22,6 +22,8 @@ import "slick-carousel/slick/slick-theme.css";
 import "./assets/css/img_slider.css";
 import Checkout from "./pages/static/Checkout";
 import UserOrders from "./pages/user/UserOrders";
+import UserProfileLayout from "./components/user/UserProfileLayout";
+import RedirectLastPage from "./components/common/RedirectLastPage";
 
 function App() {
   const colorTheme = useSelector((state: RootState) => state.ui.colorTheme);
@@ -46,8 +48,11 @@ function App() {
           <Route path="/allProducts" element={<AllProducts />} />
           <Route path="/checkout" element={<Checkout />} />
 
-          <Route path="/user/profile" element={<UserProfile />} />
-          <Route path="/user/myOrders" element={<UserOrders />} />
+          <Route path="/user" element={<UserProfileLayout />}>
+            <Route index element={<RedirectLastPage />} />
+            <Route path="profile" element={<UserProfile />} />
+            <Route path="myOrders" element={<UserOrders />} />
+          </Route>
 
           <Route path="/product/:productId" element={<ProductDetails />} />
 

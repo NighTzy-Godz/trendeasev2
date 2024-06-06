@@ -15,10 +15,10 @@ function UserOrders() {
   const { data } = useGetMyOrdersQuery("");
   const navigate = useNavigate();
   const myOrders = data as IOrder[];
-  const renderMyOrders = myOrders?.map((item) => {
+  const renderMyOrders = myOrders?.map((item, index) => {
     const product = item.item.product as IProduct;
     return (
-      <div className="w-full mb-10">
+      <div className="w-full mb-10" key={index}>
         <div className="flex justify-between">
           <div className="flex gap-3">
             <div className="w-32 h-32">
@@ -96,18 +96,7 @@ function UserOrders() {
     res === 1 ? navigate("/checkout") : null;
   };
 
-  return (
-    <div className="py-10 bg-bgColor min-h-[92dvh]">
-      <div className="container mx-auto">
-        <div className="flex">
-          <div className="w-1/4">
-            <ProfileNav />
-          </div>
-          <div className="w-3/4">{renderMyOrders}</div>
-        </div>
-      </div>
-    </div>
-  );
+  return <React.Fragment>{renderMyOrders}</React.Fragment>;
 }
 
 export default UserOrders;
