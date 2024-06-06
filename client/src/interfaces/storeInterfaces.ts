@@ -8,7 +8,9 @@ export interface CreateStoreData {
   phone: string;
 }
 
-export interface IStore extends Document {
+export interface UpdateStoreData extends CreateStoreData {}
+
+export interface IStore {
   pfp: string;
 
   storeName: string;
